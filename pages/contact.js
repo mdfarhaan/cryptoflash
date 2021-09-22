@@ -30,7 +30,9 @@ function About() {
             >
               <GithubIcon size={50} />
             </IconButton>
-            <IconButton>
+            <IconButton
+              onClick={() => window.open("https://linkedin.com/in/mdfarhaan")}
+            >
               <LinkedInIcon size={50} />
             </IconButton>
           </IconLink>
