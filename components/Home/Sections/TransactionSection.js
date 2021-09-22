@@ -13,7 +13,10 @@ function LandingPage() {
       <Content>
         <motion.div whileHover={{ scale: 1.1 }}>
           <DesktopImg>
-            <Image src="https://i.ibb.co/Sx4mrgR/Transaction-Mockup.png"></Image>
+            <Image
+              src="https://i.ibb.co/Sx4mrgR/Transaction-Mockup.png"
+              alt="Transaction-Mockup"
+            ></Image>
           </DesktopImg>
         </motion.div>
 

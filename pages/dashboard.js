@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import Dashboard from "../components/Dashboard/Main/Dashboard";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
 import Home from "../components/Home/Home";
 
 export default function DashboardPage() {
-  const [user, loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
     if (user) {

@@ -85,7 +85,7 @@ function SignIn(props) {
               </motion.div>
             </div>
             <BottomText>
-              Don't have an account?
+              {"Don't have an account?"}
               <Bottomlink onClick={props.onSignUpHandler}>
                 Get started
               </Bottomlink>

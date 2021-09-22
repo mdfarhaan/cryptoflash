@@ -14,7 +14,6 @@ function Transaction() {
   return (
     <div>
       <Bar />
-
       {setTimeout(() => {
         modalClose();
       }, 2000)}

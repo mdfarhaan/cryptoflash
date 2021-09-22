@@ -16,6 +16,7 @@ function Assets() {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   //Fetch Data
   const [user] = useAuthState(auth);
+
   const dataRef = db.collection("data").doc(user.uid);
   const tableRef = db.collection("table").doc(user.uid);
   const [tableData, setTableData] = useState([]);
@@ -75,6 +76,7 @@ function Assets() {
                   {row.map((card) => {
                     return (
                       <motion.div
+                        key={card.name}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >

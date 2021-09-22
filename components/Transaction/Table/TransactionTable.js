@@ -39,8 +39,3 @@ const Title = styled(Typography)`
   font-weight: bold;
   padding-left: 15px;
 `;
-
-//Styles
-
-const MobileContainer = styled.div``;
-const WebContainer = styled.div``;

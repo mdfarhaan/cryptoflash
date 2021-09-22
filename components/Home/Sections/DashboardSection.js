@@ -15,7 +15,10 @@ function LandingPage() {
         <Row>
           {isTabletOrMobile && (
             <center>
-              <Image src="https://i.ibb.co/Yf0YyrJ/Dashboard-Mockup.png"></Image>
+              <Image
+                src="https://i.ibb.co/Yf0YyrJ/Dashboard-Mockup.png"
+                alt="Dashboard-Mockup"
+              ></Image>
             </center>
           )}
           <motion.div whileHover={{ scale: 1.1 }}>
@@ -37,7 +40,10 @@ function LandingPage() {
         {isDesktopOrLaptop && (
           <motion.div whileHover={{ scale: 1.1 }}>
             <DesktopImg>
-              <Image src="https://i.ibb.co/Yf0YyrJ/Dashboard-Mockup.png"></Image>
+              <Image
+                src="https://i.ibb.co/Yf0YyrJ/Dashboard-Mockup.png"
+                alt="Dashboard-Mockup"
+              ></Image>
             </DesktopImg>
           </motion.div>
         )}
