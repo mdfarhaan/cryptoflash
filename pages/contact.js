@@ -2,7 +2,7 @@ import Head from "next/head";
 import React from "react";
 import styled from "styled-components";
 import { Typography, IconButton } from "@material-ui/core";
-import { IoLogoGithub, IoLogoLinkedin } from "react-icons/Io/";
+import { IoLogoGithub, IoLogoLinkedin } from "react-icons/io/";
 
 function About() {
   return (
