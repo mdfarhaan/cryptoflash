@@ -24,7 +24,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import TransactionIcon from "@material-ui/icons/AccountBalance";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import AssetsIcon from "@material-ui/icons/AccountBalanceWallet";
-import { CgMenuLeftAlt } from "react-icons/Cg/";
+import { CgMenuLeftAlt } from "react-icons/cg/";
 
 function Header() {
   const [user] = useAuthState(auth);

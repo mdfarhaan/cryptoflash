@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Typography, Button, TextField } from "@material-ui/core";
 import { auth, provider } from "../../../firebase";
 import * as EmailValidator from "email-validator";
-import { GrGoogle } from "react-icons/Gr/";
+import { GrGoogle } from "react-icons/gr/";
 import { motion } from "framer-motion";
 
 function SignUp(props) {

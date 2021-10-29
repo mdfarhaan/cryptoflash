@@ -1,3 +1,4 @@
+global.SC_DISABLE_SPEEDY = true;
 import React, { useState, useEffect } from "react";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { useAuthState } from "react-firebase-hooks/auth";
