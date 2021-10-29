@@ -3,7 +3,7 @@ import styled from "styled-components";
 import TransactionTable from "./Table/TransactionTable";
 import Modal from "@material-ui/core/Modal";
 import LoadingData from "../Utils/LoadingData";
-import Bar from "../Utils/Sidebar/Bar";
+import Bar from "../Navbar/Bar";
 
 function Transaction() {
   const [showLoadingData, setShowLoadingData] = useState(true);
