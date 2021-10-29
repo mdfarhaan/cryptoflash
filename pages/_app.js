@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
-import Home from "../components/Home/Home";
 import Loading from "../components/Utils/Loading";
 // Global Styles
 const LightModeGlobalStyle = createGlobalStyle`

@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { Typography, Button, TextField } from "@material-ui/core";
-import { auth, provider } from "../../../firebase";
+import { auth, provider } from "../../firebase";
 import * as EmailValidator from "email-validator";
 import { GrGoogle } from "react-icons/gr/";
 import { motion } from "framer-motion";
 
-function SignIn(props) {
+function SignUp(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const router = useRouter();
@@ -16,30 +16,22 @@ function SignIn(props) {
     router.push("/dashboard");
   };
 
-  const signIn = (e) => {
+  const signUp = (e) => {
     e.preventDefault();
     EmailValidator.validate(email)
-      ? auth.signInWithEmailAndPassword(email, password).catch((e) => {
+      ? auth.createUserWithEmailAndPassword(email, password).catch((e) => {
           alert(e.message);
         })
       : alert("Invalid Email!");
     router.push("/dashboard");
   };
 
-  const forgotPassword = () => {
-    try {
-      auth.sendPasswordResetEmail(email);
-      alert("Password reset link sent!");
-    } catch (err) {
-      alert("Invalid Email!");
-    }
-  };
   return (
     <motion.div whileHover={{ scale: 1.1 }}>
       <Container>
         <Items>
           <center>
-            <Title>Sign in</Title>
+            <Title>Sign up</Title>
             <motion.div whileHover={{ scale: 1.1 }}>
               <WithGoogleBtn
                 variant="contained"
@@ -47,7 +39,7 @@ function SignIn(props) {
                 onClick={signInwithGoogle}
               >
                 <GoogleIcon size={20} />
-                Sign in with Google
+                Sign up with Google
               </WithGoogleBtn>
             </motion.div>
 
@@ -67,28 +59,23 @@ function SignIn(props) {
               <TextField
                 id="standard-basic"
                 label="Password"
-                style={{ width: "100%" }}
                 type="password"
+                style={{ width: "100%" }}
                 onChange={(event) => {
                   setPassword(event.target.value);
                 }}
               />
-              <ForgotPasswordLink onClick={forgotPassword}>
-                Forgot password
-              </ForgotPasswordLink>
             </div>
-            <div style={{ paddingTop: 10 }}>
+            <div style={{ paddingTop: 20 }}>
               <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                <SignInBtn variant="contained" color="primary" onClick={signIn}>
-                  Sign in
-                </SignInBtn>
+                <SignUpBtn variant="contained" color="primary" onClick={signUp}>
+                  Sign Up
+                </SignUpBtn>
               </motion.div>
             </div>
             <BottomText>
-              {"Don't have an account?"}
-              <Bottomlink onClick={props.onSignUpHandler}>
-                Get started
-              </Bottomlink>
+              Have an account?
+              <Bottomlink onClick={props.onLoginHandler}>Login</Bottomlink>
             </BottomText>
           </center>
         </Items>
@@ -97,13 +84,13 @@ function SignIn(props) {
   );
 }
 
-export default SignIn;
+export default SignUp;
 
 // Styles
 const Container = styled.div`
   display: grid;
-  background-color: white;
   place-items: center;
+  background-color: white;
   height: 100vh;
   @media (max-width: 1224px) {
     padding-top: 25px;
@@ -118,13 +105,14 @@ const Title = styled(Typography)`
   }
 `;
 const Items = styled.div`
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  background-color: white;
   padding: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: 20px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   @media (max-width: 1224px) {
     width: 400px;
     padding: 30px;
@@ -161,24 +149,11 @@ const WithGoogleBtn = styled(Button)`
     font-size: 20px;
   }
 `;
-const ForgotPasswordLink = styled.button`
-  text-decoration: none;
-  background: none;
-  border: none;
-  color: #0645ad;
-  font-family: arial, sans-serif;
-  cursor: pointer;
-  font-size: 14px;
-  padding-top: 10px;
-  @media (max-width: 1224px) {
-    font-size: 20px;
-  }
-`;
 const GoogleIcon = styled(GrGoogle)`
   size: 50px;
   padding: 5px;
 `;
-const SignInBtn = styled(Button)`
+const SignUpBtn = styled(Button)`
   width: 100%;
   @media (max-width: 1224px) {
     font-size: 20px;

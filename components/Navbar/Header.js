@@ -15,11 +15,10 @@ import {
   Switch,
   ListItemIcon,
 } from "@material-ui/core";
-import { auth } from "../../../firebase";
+import { auth } from "../../firebase";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Logout from "@material-ui/icons/ExitToApp";
-import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
 import TransactionIcon from "@material-ui/icons/AccountBalance";
 import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -145,8 +144,7 @@ function Header() {
             <div>
               <UserAvatar
                 alt={user.email}
-                // src={profilePic}
-                src="https://lh3.googleusercontent.com/a-/AOh14GgmRANY1w7fo75iXW4sTAyNSj4E8eMpOjTcc40snfY=s96-c"
+                src={profilePic}
                 onClick={openMenu}
               ></UserAvatar>
               <Menu

@@ -7,7 +7,7 @@ import Table from "../Table/Table";
 import AddTransaction from "./AddTransaction";
 import Chart from "../Chart/Chart";
 import coinData from "../../Utils/coinData";
-import Bar from "../../Utils/Sidebar/Bar";
+import Bar from "../../Navbar/Bar";
 import Modal from "@material-ui/core/Modal";
 import LoadingData from "../../Utils/LoadingData";
 
@@ -33,6 +33,14 @@ function Dashboard(props) {
   const [chartCoinData, setChartCoinData] = useState([]);
   const [chartProfitData, setChartProfitData] = useState([]);
   const [chartValueData, setChartValueData] = useState([]);
+
+  //Add user
+  if (user) {
+    db.collection("users").doc(user.uid).set({
+      email: user.email,
+      photoURL: user.photoURL,
+    });
+  }
 
   //Fetch Coin Price
   const fetchPrice = async (coin) => {
