@@ -6,7 +6,7 @@ import { useMediaQuery } from "react-responsive";
 import { auth, db } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import AssetsCard from "./AssetsCard";
-import Bar from "../Utils/Sidebar/Bar";
+import Bar from "../Navbar/Bar";
 import Modal from "@material-ui/core/Modal";
 import LoadingData from "../Utils/LoadingData";
 function Assets() {
