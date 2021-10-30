@@ -20,10 +20,29 @@ function AddTransaction(props) {
   const [quantity, setQuantity] = useState(0);
   const [pricePerCoin, setPricePerCoin] = useState(0);
   const [date, setDate] = useState();
-
   // Firebase
   const [user] = useAuthState(auth);
   const userDocRef = db.collection("data").doc(user.uid);
+  //data
+  const [data, setData] = useState([]);
+
+  const fetchData = () => {
+    var dataArray = [];
+    userDocRef.get().then((doc) => {
+      if (doc.exists) {
+        doc.data().subcollection.forEach((collection) => {
+          userDocRef.collection(collection).onSnapshot((snapshot) => {
+            dataArray.push(snapshot.docs.map((doc) => doc.data()));
+            setTimeout(() => {
+              setData(dataArray);
+            }, 500);
+          });
+        });
+      } else {
+        setDataExist(false);
+      }
+    });
+  };
 
   const submitHandler = () => {
     props.onSubmit();
@@ -57,6 +76,9 @@ function AddTransaction(props) {
               });
         }
       });
+      setTimeout(() => {
+        location.reload();
+      }, 500);
     } catch (err) {
       alert("Document Fields Invalid! Please enter all the required data.");
     }

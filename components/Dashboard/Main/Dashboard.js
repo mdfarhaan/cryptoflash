@@ -21,6 +21,7 @@ function Dashboard(props) {
   //Table
   const tableRef = db.collection("table").doc(user.uid);
   const [tableData, setTableData] = useState([]);
+
   //Cube
   const [cubeValue, setCubeValue] = useState(0);
   const [cubeProfit, setCubeProfit] = useState(0);
@@ -77,7 +78,7 @@ function Dashboard(props) {
   useEffect(() => {
     //data is sometimes not set so its loops through empty set
     data.forEach((coinObj) => {
-      console.log("data");
+      console.log("Set to table hook");
       var Holdings = 0; //current Coin holdings
       var Value = 0; //totalSpent
 
@@ -117,10 +118,9 @@ function Dashboard(props) {
         }, 1000);
       });
     });
-  }, []);
+  }, [data]);
 
-  // Fetch Table Data
-  useEffect(() => {
+  const fetchTableData = () => {
     var dataArray = [];
     dataRef.get().then((doc) => {
       if (doc.exists) {
@@ -136,8 +136,16 @@ function Dashboard(props) {
         });
       }
     });
+  };
+
+  // Fetch Table Data
+  useEffect(() => {
+    setTimeout(() => {
+      fetchTableData();
+    }, 3000);
   }, []);
-  // //Fetch Cube Data
+
+  //Fetch Cube Data
   useEffect(() => {
     var value = 0;
     var profit = 0;
@@ -220,7 +228,7 @@ function Dashboard(props) {
           <Content>
             {setTimeout(() => {
               modalClose();
-            }, 5000)}
+            }, 6000)}
             <LoadingDataContainer open={showLoadingData} onClose={modalClose}>
               <LoadingData />
             </LoadingDataContainer>
