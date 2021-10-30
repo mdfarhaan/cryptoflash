@@ -59,7 +59,6 @@ export default function App({ Component, pageProps }) {
         <DarkModeGlobalStyle />
       )}
       <ThemeProvider theme={theme}>
-        {loading && <Loading />}
         {<Component {...pageProps} />}
       </ThemeProvider>
     </>
