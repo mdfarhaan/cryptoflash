@@ -142,7 +142,7 @@ function Dashboard(props) {
   useEffect(() => {
     setTimeout(() => {
       fetchTableData();
-    }, 3000);
+    }, 5000);
   }, []);
 
   //Fetch Cube Data
