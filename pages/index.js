@@ -3,10 +3,9 @@ import Home from "../components/Home/Home";
 import Dashboard from "../components/Dashboard/Main/Dashboard";
 import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { StyleSheetManager } from "styled-components";
 
 export default function Index() {
-  const [user, loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   return (
     <div>

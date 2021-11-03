@@ -31,7 +31,7 @@ const DarkMode = {
 };
 
 export default function App({ Component, pageProps }) {
-  const [user, loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const [theme, setTheme] = useState(DarkMode);
 
   useEffect(() => {
@@ -59,7 +59,6 @@ export default function App({ Component, pageProps }) {
         <DarkModeGlobalStyle />
       )}
       <ThemeProvider theme={theme}>
-        {loading && <Loading />}
         {<Component {...pageProps} />}
       </ThemeProvider>
     </>

@@ -14,7 +14,7 @@ function HeaderHome(props) {
     <Container>
       <Navbar position="sticky">
         <Bar>
-          <Title>CRYPTO FLASH Beta</Title>
+          <Title>CRYPTO FLASH</Title>
 
           <DashboardBtn
             variant="contained"
