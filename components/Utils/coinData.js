@@ -17,7 +17,7 @@ const coinData = {
   },
   Shibainu: {
     symbol: "SHIB",
-    img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/usdt", //no image available
+    img: "https://cryptoflash-icons-api.herokuapp.com/shib", 
   },
   Tether: {
     symbol: "USDT",
