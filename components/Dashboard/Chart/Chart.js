@@ -6,8 +6,8 @@ import ProfitChart from "./ProfitChart";
 import ValueChart from "./ValueChart";
 
 function Chart(props) {
-  const [showCoinChart, setShowCoinChart] = useState(true);
-  const [showProfitChart, setShowProfitChart] = useState(false);
+  const [showCoinChart, setShowCoinChart] = useState(false);
+  const [showProfitChart, setShowProfitChart] = useState(true);
   const [showValueChart, setShowValueChart] = useState(false);
 
   function disableScrolling() {
