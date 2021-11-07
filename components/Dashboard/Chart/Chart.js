@@ -29,14 +29,14 @@ function Chart(props) {
   return (
     <Container>
       <RadioDiv>
-        <RadioGroup row defaultValue="Coin">
+        <RadioGroup row defaultValue="Profit">
           <FormControlLabel
-            value="Coin"
+            value="Profit"
             label=""
             labelPlacement="top"
             onChange={() => {
-              setShowCoinChart(true);
-              setShowProfitChart(false);
+              setShowCoinChart(false);
+              setShowProfitChart(true);
               setShowValueChart(false);
               disableScrolling();
               sleep(300).then(() => {
@@ -46,12 +46,12 @@ function Chart(props) {
             control={<Radio color="primary"></Radio>}
           ></FormControlLabel>
           <FormControlLabel
-            value="Profit"
+            value="Coin"
             label=""
             labelPlacement="top"
             onChange={() => {
-              setShowCoinChart(false);
-              setShowProfitChart(true);
+              setShowCoinChart(true);
+              setShowProfitChart(false);
               setShowValueChart(false);
               disableScrolling();
               sleep(300).then(() => {
