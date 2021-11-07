@@ -93,10 +93,13 @@ function Dashboard(props) {
             Holdings = Holdings - coinDoc.quantity;
             Value = Value - coinDoc.totalSpent;
           }
+          console.log("iamhere");
           if (Number(Holdings) === Holdings && Holdings % 1 === 0) {
+            console.log(Holdings);
             Holdings = parseInt(Holdings);
           } else {
-            Holdings = parseFloat(Holdings.toFixed(4));
+            Holdings = parseFloat(Holdings);
+            console.log(Holdings);
           }
           setTimeout(() => {
             // Update TableCoinData
