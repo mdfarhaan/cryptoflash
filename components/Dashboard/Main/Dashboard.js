@@ -119,7 +119,7 @@ function Dashboard(props) {
         }, 1000);
       });
     });
-  }, [data]);
+  }, []);
 
   const fetchTableData = () => {
     var dataArray = [];
