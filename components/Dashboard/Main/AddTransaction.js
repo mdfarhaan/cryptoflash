@@ -74,6 +74,7 @@ function AddTransaction(props) {
     { value: "Polkadot", label: "DOT" },
     { value: "Stellar", label: "XLM" },
     { value: "Monero", label: "XMR" },
+    { value: "BasicAttentionToken", label: "BAT" },
   ];
 
   return (
