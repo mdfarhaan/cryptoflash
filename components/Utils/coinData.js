@@ -17,7 +17,7 @@ const coinData = {
   },
   Shibainu: {
     symbol: "SHIB",
-    img: "https://cryptoflash-icons-api.herokuapp.com/shib",
+    img: "https://cryptoflash-icons-api.herokuapp.com/128/shib",
   },
   Tether: {
     symbol: "USDT",
@@ -42,6 +42,10 @@ const coinData = {
   BasicAttentionToken: {
     symbol: "BAT",
     img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/bat",
+  },
+  Stellar: {
+    symbol: "XLM",
+    img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/xlm",
   },
 };
 
