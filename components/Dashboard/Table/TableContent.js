@@ -86,7 +86,7 @@ function TableContent(props) {
                         {column.id === "img" ? (
                           <Avatar alt={name} src={img} />
                         ) : column.id === "price" ? (
-                          "₹" + column.format(value)
+                          "₹" + value
                         ) : column.id === "value" ? (
                           "₹" + column.format(value)
                         ) : column.id === "pandl" ? (
