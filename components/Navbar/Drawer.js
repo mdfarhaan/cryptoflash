@@ -113,12 +113,7 @@ function Drawer(props) {
             })}
           </List>
 
-          <BottomData>
-            <center>
-              <Text>{date}</Text>
-              <Text>{time}</Text>
-            </center>
-          </BottomData>
+          <BottomData>{/* TO BE ADDED */}</BottomData>
         </Container>
       )}
     </>
