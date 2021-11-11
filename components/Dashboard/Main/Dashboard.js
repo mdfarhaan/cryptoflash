@@ -117,7 +117,7 @@ function Dashboard(props) {
         }, 1000);
       });
     });
-  }, []); //data
+  }, [data]); //data
 
   //Fetch Coin Data from Table collection
   const fetchTableData = () => {
