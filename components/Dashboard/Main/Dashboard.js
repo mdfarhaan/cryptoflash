@@ -21,7 +21,6 @@ function Dashboard(props) {
   //Table
   const tableRef = db.collection("table").doc(user.uid);
   const [tableData, setTableData] = useState([]);
-
   //Cube
   const [cubeValue, setCubeValue] = useState(0);
   const [cubeProfit, setCubeProfit] = useState(0);
@@ -76,7 +75,6 @@ function Dashboard(props) {
 
   //Set to Table
   useEffect(() => {
-    //data is sometimes not set so its loops through empty set
     data.forEach((coinObj) => {
       console.log("Set to table hook");
       var Holdings = 0; //current Coin holdings
@@ -121,6 +119,7 @@ function Dashboard(props) {
     });
   }, []);
 
+  //Fetch Coin Data from Table
   const fetchTableData = () => {
     var dataArray = [];
     dataRef.get().then((doc) => {
@@ -141,9 +140,7 @@ function Dashboard(props) {
 
   // Fetch Table Data
   useEffect(() => {
-    setTimeout(() => {
       fetchTableData();
-    }, 5000);
   }, []);
 
   //Fetch Cube Data
