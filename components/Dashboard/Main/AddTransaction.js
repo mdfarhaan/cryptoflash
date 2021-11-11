@@ -54,6 +54,9 @@ function AddTransaction(props) {
               });
         }
       });
+      setTimeout(() => {
+        location.reload();
+      }, 500);
     } catch (err) {
       alert("Document Fields Invalid! Please enter all the required data.");
     }
