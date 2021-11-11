@@ -23,7 +23,6 @@ function TableContent(props) {
       label: "Price",
       minWidth: 100,
       align: "center",
-      format: (value) => value.toFixed(2),
     },
     // {
     //   id: "day",
@@ -86,7 +85,7 @@ function TableContent(props) {
                         {column.id === "img" ? (
                           <Avatar alt={name} src={img} />
                         ) : column.id === "price" ? (
-                          "₹" + column.format(value)
+                          "₹" + value
                         ) : column.id === "value" ? (
                           "₹" + column.format(value)
                         ) : column.id === "pandl" ? (
