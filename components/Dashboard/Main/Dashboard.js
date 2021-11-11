@@ -42,7 +42,7 @@ function Dashboard(props) {
     });
   }
 
-  //Fetch Coin Price
+  //Fetch Coin Price from API
   const fetchPrice = async (coin) => {
     const url = price_base_url + coin.toLowerCase();
     try {
@@ -117,7 +117,7 @@ function Dashboard(props) {
         }, 1000);
       });
     });
-  }, [data]);
+  }, []); //data
 
   //Fetch Coin Data from Table collection
   const fetchTableData = () => {
