@@ -54,7 +54,7 @@ function Dashboard(props) {
     }
   };
 
-  //Set Documents to "Data"
+  //Get data from database
   useEffect(() => {
     var dataArray = [];
     dataRef.get().then((doc) => {
@@ -68,15 +68,15 @@ function Dashboard(props) {
           });
         });
       } else {
+        //Data does not exist
         setDataExist(false);
       }
     });
   }, []);
 
-  //Set to Table
+  //Calculate and set data to table collection
   useEffect(() => {
     data.forEach((coinObj) => {
-      console.log("Set to table hook");
       var Holdings = 0; //current Coin holdings
       var Value = 0; //totalSpent
 
@@ -91,7 +91,7 @@ function Dashboard(props) {
             Holdings = Holdings - coinDoc.quantity;
             Value = Value - coinDoc.totalSpent;
           }
-          
+
           if (Number(Holdings) === Holdings && Holdings % 1 === 0) {
             Holdings = parseInt(Holdings);
           } else {
@@ -111,15 +111,15 @@ function Dashboard(props) {
                 day: 1.8, //API
                 holdings: Holdings, // current holdings
                 value: Holdings * price, //current value
-                pandl: Holdings * price - Value, //coin profit
+                pandl: Holdings * price - Value, //current profit
               });
           });
         }, 1000);
       });
     });
-  }, []);
+  }, [data]);
 
-  //Fetch Coin Data from Table
+  //Fetch Coin Data from Table collection
   const fetchTableData = () => {
     var dataArray = [];
     dataRef.get().then((doc) => {
@@ -140,7 +140,7 @@ function Dashboard(props) {
 
   // Fetch Table Data
   useEffect(() => {
-      fetchTableData();
+    fetchTableData();
   }, []);
 
   //Fetch Cube Data
