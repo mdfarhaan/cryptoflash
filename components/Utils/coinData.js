@@ -43,10 +43,6 @@ const coinData = {
     symbol: "BAT",
     img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/bat",
   },
-  Stellar: {
-    symbol: "XLM",
-    img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/xlm",
-  },
 };
 
 export default coinData;
