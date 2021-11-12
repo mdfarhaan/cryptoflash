@@ -118,7 +118,8 @@ function Dashboard(props) {
       });
     });
   }, []); //data
-
+  
+  // Runs multiple times
   //Fetch Coin Data from Table collection
   useEffect(() => {
     var dataArray = [];
