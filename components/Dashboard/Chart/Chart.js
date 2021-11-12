@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "../../../firebase";
 import styled from "styled-components";
 import { Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
 import CoinChart from "./CoinChart";
@@ -6,9 +8,64 @@ import ProfitChart from "./ProfitChart";
 import ValueChart from "./ValueChart";
 
 function Chart(props) {
+  const [user] = useAuthState(auth);
+  const dataRef = db.collection("data").doc(user.uid);
+  const tableRef = db.collection("table").doc(user.uid);
+  const [tableData, setTableData] = useState([]);
+  //Chart Data
+  const [chartCoinName, setChartCoinName] = useState([]);
+  const [chartCoinData, setChartCoinData] = useState([]);
+  const [chartProfitData, setChartProfitData] = useState([]);
+  const [chartValueData, setChartValueData] = useState([]);
+  //Chart
   const [showCoinChart, setShowCoinChart] = useState(false);
   const [showProfitChart, setShowProfitChart] = useState(true);
   const [showValueChart, setShowValueChart] = useState(false);
+
+  const fetchData = () => {
+    var dataArray = [];
+    dataRef.get().then((doc) => {
+      if (doc.exists) {
+        doc.data().subcollection.forEach((collection) => {
+          tableRef.collection(collection).onSnapshot((snapshot) => {
+            snapshot.docs.map((doc) => {
+              dataArray.push(doc.data());
+            });
+            setTimeout(() => {
+              setTableData(dataArray);
+            }, 500);
+          });
+        });
+      } else {
+        setDataExist(false);
+      }
+    });
+  };
+
+  // Fetch Table Data
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // //Fetch Chart Data
+  useEffect(() => {
+    var coinName = [];
+    var coinArray = [];
+    var profitArray = [];
+    var valueArray = [];
+    tableData.forEach((doc) => {
+      coinName.push(doc.name);
+      coinArray.push(doc.holdings);
+      profitArray.push(doc.pandl.toFixed(0));
+      valueArray.push(doc.value.toFixed(0));
+    });
+    setTimeout(() => {
+      setChartCoinName(coinName);
+      setChartCoinData(coinArray);
+      setChartProfitData(profitArray);
+      setChartValueData(valueArray);
+    }, 2000);
+  }, [tableData]);
 
   function disableScrolling() {
     var x = window.scrollX;
@@ -80,22 +137,22 @@ function Chart(props) {
       <div>
         {showCoinChart && (
           <CoinChart
-            legendData={props.coinLegendData}
-            legend={props.coinLegend}
+            legendData={chartCoinData}
+            legend={chartCoinName}
             dataExist={props.dataExist}
           />
         )}
         {showValueChart && (
           <ValueChart
-            legendData={props.valueLegendData}
-            legend={props.coinLegend}
+            legendData={chartValueData}
+            legend={chartCoinName}
             dataExist={props.dataExist}
           />
         )}
         {showProfitChart && (
           <ProfitChart
-            legendData={props.profitLegendData}
-            legend={props.coinLegend}
+            legendData={chartProfitData}
+            legend={chartCoinName}
             dataExist={props.dataExist}
           />
         )}

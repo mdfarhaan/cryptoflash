@@ -7,7 +7,7 @@ function Table(props) {
   return (
     <Container>
       <Title>Assets</Title>
-      <TableContent data={props.tableData} dataExist={props.dataExist} />
+      <TableContent dataExist={props.dataExist} />
       <ButtonContainer>
         <AddButton
           variant="contained"

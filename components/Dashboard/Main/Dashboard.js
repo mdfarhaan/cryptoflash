@@ -11,28 +11,13 @@ import Bar from "../../Navbar/Bar";
 import Modal from "@material-ui/core/Modal";
 import LoadingData from "../../Utils/LoadingData";
 
-function Dashboard(props) {
+function Dashboard() {
   //Data
   const [user] = useAuthState(auth);
   const price_base_url = "https://cryptoflash-api.herokuapp.com/api/";
   const dataRef = db.collection("data").doc(user.uid);
   const [dataExist, setDataExist] = useState(true);
   const [data, setData] = useState([]);
-  //Table
-  const tableRef = db.collection("table").doc(user.uid);
-  const [tableData, setTableData] = useState([]);
-  //Cube
-  const [cubeValue, setCubeValue] = useState(0);
-  const [cubeProfit, setCubeProfit] = useState(0);
-  const [cubeMostProfitCoin, setCubeMostProfitCoin] = useState();
-  const [cubeMostProfit, setCubeMostProfit] = useState(0);
-  const [cubeLeastProfitCoin, setCubeLeastProfitCoin] = useState();
-  const [cubeLeastProfit, setCubeLeastProfit] = useState(0);
-  //Chart
-  const [chartCoinName, setChartCoinName] = useState([]);
-  const [chartCoinData, setChartCoinData] = useState([]);
-  const [chartProfitData, setChartProfitData] = useState([]);
-  const [chartValueData, setChartValueData] = useState([]);
 
   //Add user
   if (user) {
@@ -97,103 +82,26 @@ function Dashboard(props) {
           } else {
             Holdings = parseFloat(Holdings.toFixed(6));
           }
-          setTimeout(() => {
-            // Update TableCoinData
-            db.collection("table")
-              .doc(user.uid)
-              .collection(coinDoc.coin)
-              .doc("TableCoinData")
-              .set({
-                name: coinDoc.coin,
-                img: coinDetails.img,
-                symbol: coinDetails.symbol,
-                price: price, //current price
-                day: 1.8, //API
-                holdings: Holdings, // current holdings
-                value: Holdings * price, //current value
-                pandl: Holdings * price - Value, //current profit
-              });
-          });
-        }, 1000);
+
+          // Update TableCoinData
+          db.collection("table")
+            .doc(user.uid)
+            .collection(coinDoc.coin)
+            .doc("TableCoinData")
+            .set({
+              name: coinDoc.coin,
+              img: coinDetails.img,
+              symbol: coinDetails.symbol,
+              price: price, //current price
+              day: 1.8, //API
+              holdings: Holdings, // current holdings
+              value: Holdings * price, //current value
+              pandl: Holdings * price - Value, //current profit
+            });
+        });
       });
     });
-  }, []); //data
-
-  //Fetch Coin Data from Table collection
-  useEffect(() => {
-    var dataArray = [];
-    dataRef.get().then((doc) => {
-      if (doc.exists) {
-        doc.data().subcollection.forEach((collection) => {
-          tableRef.collection(collection).onSnapshot((snapshot) => {
-            snapshot.docs.map((doc) => {
-              dataArray.push(doc.data());
-            });
-            setTimeout(() => {
-              setTableData(dataArray);
-            }, 500);
-          });
-        });
-      }
-    });
-  }, []);
-
-  //Fetch Cube Data
-  useEffect(() => {
-    var value = 0;
-    var profit = 0;
-    var ProfitArray = [];
-    //Most Profit
-    var mostProfitcoin;
-    var mostProfit = 0;
-    //Least Profit
-    var leastProfitcoin;
-    var leastProfit = 0;
-    tableData.forEach((doc) => {
-      value = value + doc.value;
-      profit = profit + doc.pandl;
-      ProfitArray.push(doc.pandl.toFixed(0));
-    });
-    mostProfit = Math.max(...ProfitArray);
-    leastProfit = Math.min(...ProfitArray);
-
-    //Most and Least Profit
-    tableData.forEach((doc) => {
-      if (mostProfit == doc.pandl.toFixed(0)) {
-        mostProfitcoin = doc.name;
-      } else if (leastProfit == doc.pandl.toFixed(0)) {
-        leastProfitcoin = doc.name;
-      }
-    });
-    setTimeout(() => {
-      setCubeValue(value.toFixed(0));
-      setCubeProfit(profit.toFixed(0));
-      setCubeMostProfitCoin(mostProfitcoin);
-      setCubeMostProfit(mostProfit);
-      setCubeLeastProfitCoin(leastProfitcoin);
-      setCubeLeastProfit(leastProfit);
-    }, 2000);
-  }, [tableData]);
-
-  // //Fetch Chart Data
-  useEffect(() => {
-    var coinName = [];
-    var coinArray = [];
-    var profitArray = [];
-    var valueArray = [];
-    tableData.forEach((doc) => {
-      coinName.push(doc.name);
-      coinArray.push(doc.holdings);
-      profitArray.push(doc.pandl.toFixed(0));
-      valueArray.push(doc.value.toFixed(0));
-    });
-    setTimeout(() => {
-      setChartCoinName(coinName);
-      setChartCoinData(coinArray);
-      setChartProfitData(profitArray);
-      setChartValueData(valueArray);
-    }, 2000);
-  }, [tableData]);
+  }, [data]); //data
 
   // Window Functions
   const [showData, setShowData] = useState(true);
@@ -219,39 +127,18 @@ function Dashboard(props) {
         <Bar />
         {showData && (
           <Content>
-            {setTimeout(() => {
-              modalClose();
-            }, 6000)}
-            <LoadingDataContainer open={showLoadingData} onClose={modalClose}>
-              <LoadingData />
-            </LoadingDataContainer>
             <DataContainer>
-              <Cube
-                value={cubeValue}
-                profit={cubeProfit}
-                mostProfitCoin={cubeMostProfitCoin}
-                mostProfit={cubeMostProfit}
-                leastProfitCoin={cubeLeastProfitCoin}
-                leastProfit={cubeLeastProfit}
-                dataExist={dataExist}
-              />
-              <TableContainer>
-                <Table
-                  onAddTransaction={onAddTransaction}
-                  tableData={tableData}
-                  dataExist={dataExist}
-                />
-              </TableContainer>
+              <Cube dataExist={dataExist} />
+              <ChartContainer>
+                <Chart dataExist={dataExist} />
+              </ChartContainer>
             </DataContainer>
-            <ChartContainer>
-              <Chart
-                coinLegend={chartCoinName}
-                coinLegendData={chartCoinData}
-                profitLegendData={chartProfitData}
-                valueLegendData={chartValueData}
+            <TableContainer>
+              <Table
+                onAddTransaction={onAddTransaction}
                 dataExist={dataExist}
               />
-            </ChartContainer>
+            </TableContainer>
           </Content>
         )}
 
@@ -273,7 +160,7 @@ export default Dashboard;
 //Styles
 const Container = styled.div``;
 const DataContainer = styled.div`
-  display: flex;
+  margin-top: 60px;
   padding: 60px;
   justify-content: center;
   @media (max-width: 1224px) {
@@ -284,7 +171,7 @@ const DataContainer = styled.div`
   }
 `;
 const TableContainer = styled.div`
-  padding-top: 23px;
+  margin-top: 140px;
   display: flex;
   flex-direction: column;
   @media (max-width: 1224px) {
@@ -308,7 +195,9 @@ const ChartContainer = styled.div`
   }
 `;
 const Content = styled.div`
-  padding-left: 200px;
+  display: flex;
+  margin-left: 300px;
+
   @media (max-width: 1224px) {
     padding-left: 0px;
   }

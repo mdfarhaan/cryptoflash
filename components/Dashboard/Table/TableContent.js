@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "../../../firebase";
 import styled from "styled-components";
 import {
   Paper,
@@ -11,8 +13,39 @@ import {
   Avatar,
   Typography,
 } from "@material-ui/core";
+import LoadingData from "../../Utils/LoadingData";
 
 function TableContent(props) {
+  const [user] = useAuthState(auth);
+  const dataRef = db.collection("data").doc(user.uid);
+  const tableRef = db.collection("table").doc(user.uid);
+  const [tableData, setTableData] = useState([]);
+
+  const fetchData = () => {
+    var dataArray = [];
+    dataRef.get().then((doc) => {
+      if (doc.exists) {
+        doc.data().subcollection.forEach((collection) => {
+          tableRef.collection(collection).onSnapshot((snapshot) => {
+            snapshot.docs.map((doc) => {
+              dataArray.push(doc.data());
+            });
+            setTimeout(() => {
+              setTableData(dataArray);
+            }, 500);
+          });
+        });
+      } else {
+        setDataExist(false);
+      }
+    });
+  };
+
+  // Fetch Table Data
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   //Table Contents
   const columns = [
     { id: "img", label: "", minWidth: 10, align: "center" },
@@ -71,8 +104,9 @@ function TableContent(props) {
               ))}
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {props.data.map((row) => {
+            {tableData.map((row) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
                   {columns.map((column) => {
