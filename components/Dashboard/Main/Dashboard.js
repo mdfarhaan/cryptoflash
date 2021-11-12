@@ -117,10 +117,10 @@ function Dashboard(props) {
         }, 1000);
       });
     });
-  }, [data]); //data
+  }, []); //data
 
   //Fetch Coin Data from Table collection
-  const fetchTableData = () => {
+  useEffect(() => {
     var dataArray = [];
     dataRef.get().then((doc) => {
       if (doc.exists) {
@@ -136,11 +136,6 @@ function Dashboard(props) {
         });
       }
     });
-  };
-
-  // Fetch Table Data
-  useEffect(() => {
-    fetchTableData();
   }, []);
 
   //Fetch Cube Data
