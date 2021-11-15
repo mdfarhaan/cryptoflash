@@ -20,9 +20,9 @@ export default function DashboardPage() {
   return (
     <div>
       <Head>
-        <title>Dashboard</title>
+        <title>Dashboard | Cryptoflash</title>
         <meta name="Dashboard" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/fav.svg" />
       </Head>
       {!user ? <Home /> : <Dashboard />}
     </div>

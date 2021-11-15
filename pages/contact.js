@@ -8,9 +8,9 @@ function About() {
   return (
     <Container>
       <Head>
-        <title>Contact</title>
+        <title>Contact | Cryptoflash</title>
         <meta name="Assets" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/fav.svg" />
       </Head>
       <Content>
         <center>

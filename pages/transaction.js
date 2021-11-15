@@ -19,9 +19,9 @@ export default function TransactionPage() {
   return (
     <div>
       <Head>
-        <title>Transaction</title>
+        <title>Transaction | Cryptoflash</title>
         <meta name="Transaction" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/fav.svg" />
       </Head>
       {!user ? <Home /> : <Transaction />}
     </div>
