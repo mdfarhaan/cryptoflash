@@ -31,7 +31,7 @@ function AddTransaction(props) {
         transaction: transaction,
         coin: coin,
         quantity: quantity,
-        pricePerCoin: parseInt(pricePerCoin),
+        pricePerCoin: pricePerCoin,
         date: date,
         totalSpent: quantity * pricePerCoin,
       });
