@@ -73,7 +73,7 @@ function AddTransaction(props) {
     { value: "Ripple", label: "XRP" },
     { value: "Shibainu", label: "SHIB" },
     { value: "Tether", label: "USDT" },
-    { value: "Tron", label: "XRP" },
+    { value: "Tron", label: "TRX" },
     { value: "Polkadot", label: "DOT" },
     { value: "Stellar", label: "XLM" },
     { value: "BasicAttentionToken", label: "BAT" },
