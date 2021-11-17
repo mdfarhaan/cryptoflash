@@ -35,7 +35,7 @@ const coinData = {
     symbol: "XRP",
     img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/xrp",
   },
-  Trom: {
+  Tron: {
     symbol: "TRX",
     img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/trx",
   },
