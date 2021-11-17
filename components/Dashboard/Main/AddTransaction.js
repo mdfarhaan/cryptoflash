@@ -69,11 +69,13 @@ function AddTransaction(props) {
     { value: "Ethereum", label: "ETH" },
     { value: "Dogecoin", label: "DOGE" },
     { value: "Cardano", label: "ADA" },
+    { value: "Solana", label: "SOL" },
+    { value: "Ripple", label: "XRP" },
     { value: "Shibainu", label: "SHIB" },
     { value: "Tether", label: "USDT" },
+    { value: "Tron", label: "XRP" },
     { value: "Polkadot", label: "DOT" },
     { value: "Stellar", label: "XLM" },
-    { value: "Monero", label: "XMR" },
     { value: "BasicAttentionToken", label: "BAT" },
   ];
 

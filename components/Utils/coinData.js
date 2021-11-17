@@ -23,17 +23,21 @@ const coinData = {
     symbol: "USDT",
     img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/usdt",
   },
-  Litecoin: {
-    symbol: "LTC",
-    img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/ltc",
-  },
-  Monero: {
-    symbol: "XMR ",
-    img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/xmr",
-  },
   Polkadot: {
     symbol: "DOT",
     img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/dot",
+  },
+  Solana: {
+    symbol: "SOL",
+    img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/sol",
+  },
+  Ripple: {
+    symbol: "XRP",
+    img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/xrp",
+  },
+  Trom: {
+    symbol: "TRX",
+    img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/trx",
   },
   Stellar: {
     symbol: "XLM",
