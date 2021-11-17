@@ -14,7 +14,7 @@ import LoadingData from "../../Utils/LoadingData";
 function Dashboard() {
   //Data
   const [user] = useAuthState(auth);
-  const price_base_url = "https://cryptoflash-api.herokuapp.com/api/";
+  const price_base_url = "https://cryptoflash-web-api.herokuapp.com/api/";
   const dataRef = db.collection("data").doc(user.uid);
   const [dataExist, setDataExist] = useState(true);
   const [data, setData] = useState([]);
