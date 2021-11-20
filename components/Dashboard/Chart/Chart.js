@@ -14,9 +14,9 @@ function Chart(props) {
   const [tableData, setTableData] = useState([]);
   //Chart Data
   const [chartCoinName, setChartCoinName] = useState([]);
-  const [chartCoinData, setChartCoinData] = useState([]);
   const [chartProfitData, setChartProfitData] = useState([]);
   const [chartValueData, setChartValueData] = useState([]);
+  const [chartCoinData, setChartCoinData] = useState(0);
   //Chart
   const [showCoinChart, setShowCoinChart] = useState(false);
   const [showProfitChart, setShowProfitChart] = useState(true);
@@ -49,21 +49,21 @@ function Chart(props) {
 
   // //Fetch Chart Data
   useEffect(() => {
+    var value = 0;
     var coinName = [];
-    var coinArray = [];
     var profitArray = [];
     var valueArray = [];
     tableData.forEach((doc) => {
+      value = value + doc.value;
       coinName.push(doc.name);
-      coinArray.push(doc.holdings);
       profitArray.push(doc.pandl.toFixed(0));
       valueArray.push(doc.value.toFixed(0));
     });
     setTimeout(() => {
       setChartCoinName(coinName);
-      setChartCoinData(coinArray);
       setChartProfitData(profitArray);
       setChartValueData(valueArray);
+      setChartCoinData(value);
     }, 2000);
   }, [tableData]);
 
@@ -137,7 +137,8 @@ function Chart(props) {
       <div>
         {showCoinChart && (
           <CoinChart
-            legendData={chartCoinData}
+            value={chartCoinData}
+            legendData={chartValueData}
             legend={chartCoinName}
             dataExist={props.dataExist}
           />

@@ -4,12 +4,21 @@ import styled from "styled-components";
 import { Typography } from "@material-ui/core";
 
 function ChartContent(props) {
+  let percentArray = [];
+  props.legendData.forEach((value) => {
+    percentArray.push(((value * 100) / props.value).toFixed(0));
+  });
+
+  let percentLegend = [];
+  props.legend.forEach((coin) => {
+    percentLegend.push(coin + " % ");
+  });
   const data = {
-    labels: props.legend,
+    labels: percentLegend,
 
     datasets: [
       {
-        data: props.legendData,
+        data: percentArray,
         backgroundColor: [
           "rgba(255, 99, 132, 1)",
           "rgba(54, 162, 235, 1)",
