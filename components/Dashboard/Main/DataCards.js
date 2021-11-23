@@ -104,6 +104,10 @@ function DataCards(props) {
     }, 2000);
   }, [tableData]);
 
+  tableData.sort((a, b) => {
+    return b.value - a.value;
+  });
+
   return (
     <Container>
       <DataContainer>
