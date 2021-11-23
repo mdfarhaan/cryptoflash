@@ -9,6 +9,7 @@ import Chart from "../Chart/Chart";
 import coinData from "../../Utils/coinData";
 import Bar from "../../Navbar/Bar";
 import Modal from "@material-ui/core/Modal";
+import DataCards from "./DataCards";
 import LoadingData from "../../Utils/LoadingData";
 
 function Dashboard() {
@@ -127,18 +128,10 @@ function Dashboard() {
         <Bar />
         {showData && (
           <Content>
-            <DataContainer>
-              <Cube dataExist={dataExist} />
-              <ChartContainer>
-                <Chart dataExist={dataExist} />
-              </ChartContainer>
-            </DataContainer>
-            <TableContainer>
-              <Table
-                onAddTransaction={onAddTransaction}
-                dataExist={dataExist}
-              />
-            </TableContainer>
+            <DataCards
+              dataExist={dataExist}
+              onAddTransaction={onAddTransaction}
+            />
           </Content>
         )}
 
@@ -159,40 +152,10 @@ export default Dashboard;
 
 //Styles
 const Container = styled.div``;
-const DataContainer = styled.div`
-  margin-top: 60px;
-  padding: 60px;
-  justify-content: center;
-  @media (max-width: 1224px) {
-    display: flex;
-    justify-content: center;
-    place-items: center;
-    flex-direction: column;
-  }
-`;
-const TableContainer = styled.div`
-  margin-top: 140px;
-  display: flex;
-  flex-direction: column;
-  @media (max-width: 1224px) {
-    width: 100%;
-    padding-left: 40px;
-    padding-right: 20px;
-  }
-`;
 const FormContainer = styled.div`
   display: grid;
   place-items: center;
   height: 90vh;
-`;
-const ChartContainer = styled.div`
-  display: grid;
-  padding: 10px;
-  place-items: center;
-  @media (max-width: 1224px) {
-    padding-top: 35px;
-    padding-left: 30px;
-  }
 `;
 const Content = styled.div`
   display: flex;

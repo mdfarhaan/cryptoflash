@@ -22,51 +22,6 @@ function Chart(props) {
   const [showProfitChart, setShowProfitChart] = useState(true);
   const [showValueChart, setShowValueChart] = useState(false);
 
-  const fetchData = () => {
-    var dataArray = [];
-    dataRef.get().then((doc) => {
-      if (doc.exists) {
-        doc.data().subcollection.forEach((collection) => {
-          tableRef.collection(collection).onSnapshot((snapshot) => {
-            snapshot.docs.map((doc) => {
-              dataArray.push(doc.data());
-            });
-            setTimeout(() => {
-              setTableData(dataArray);
-            }, 500);
-          });
-        });
-      } else {
-        setDataExist(false);
-      }
-    });
-  };
-
-  // Fetch Table Data
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  // //Fetch Chart Data
-  useEffect(() => {
-    var value = 0;
-    var coinName = [];
-    var profitArray = [];
-    var valueArray = [];
-    tableData.forEach((doc) => {
-      value = value + doc.value;
-      coinName.push(doc.name);
-      profitArray.push(doc.pandl.toFixed(0));
-      valueArray.push(doc.value.toFixed(0));
-    });
-    setTimeout(() => {
-      setChartCoinName(coinName);
-      setChartProfitData(profitArray);
-      setChartValueData(valueArray);
-      setChartCoinData(value);
-    }, 2000);
-  }, [tableData]);
-
   function disableScrolling() {
     var x = window.scrollX;
     var y = window.scrollY;
@@ -137,23 +92,23 @@ function Chart(props) {
       <div>
         {showCoinChart && (
           <CoinChart
-            value={chartCoinData}
-            legendData={chartValueData}
-            legend={chartCoinName}
+            value={props.chartCoinData}
+            legendData={props.chartValueData}
+            legend={props.chartCoinName}
             dataExist={props.dataExist}
           />
         )}
         {showValueChart && (
           <ValueChart
-            legendData={chartValueData}
-            legend={chartCoinName}
+            legendData={props.chartValueData}
+            legend={props.chartCoinName}
             dataExist={props.dataExist}
           />
         )}
         {showProfitChart && (
           <ProfitChart
-            legendData={chartProfitData}
-            legend={chartCoinName}
+            legendData={props.chartProfitData}
+            legend={props.chartCoinName}
             dataExist={props.dataExist}
           />
         )}
