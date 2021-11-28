@@ -2,6 +2,8 @@
 
 Crypto Portfolio Tracker, keep track of your Profits, Losses, Valuation, Transaction and Assets all at one place.
 
+> Built with ❤️ on NextJS and deployed to Vercel
+
 ## Dashboard
 View your profits, losses, best performing crypto currency, Cryptoflash dashboard is packed with information about your
 assets. Charts to visualise your assets.
@@ -15,5 +17,3 @@ View all your past transaction at one place. Easy to understand table to see you
 ## Assets
 View all your crypto assets at one place. Each card shows the total crypto currency and the value of the asset.
 <p align='center'><img src="https://i.ibb.co/9qB16T1/Assets-Mockup.png" alt="Assets-Mockup" border="0"></p>
-
-> Built with ❤️ on NextJS and deployed to Vercel
