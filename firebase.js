@@ -1,7 +1,7 @@
 import firebase from "firebase";
 require("dotenv").config;
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Add Firebase config id to .env
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
