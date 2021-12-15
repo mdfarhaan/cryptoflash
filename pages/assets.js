@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
-import Assets from "../components/Assets/Assets";
+import Assets from "../components/AssetsPage/Assets";
 import Home from "../components/Home/Home";
 import { auth, db } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";

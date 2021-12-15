@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
     "lint": "next lint"
   },
@@ -20,6 +20,7 @@
     "chart.js": "^3.4.1",
     "dotenv": "^10.0.0",
     "email-validator": "^2.0.4",
+    "express": "^4.17.1",
     "firebase": "^8.10.0",
     "framer-motion": "^4.1.17",
     "material-ui": "^1.0.0-beta.47",

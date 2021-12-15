@@ -11,54 +11,56 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
-import { auth, db } from "../../../firebase";
+import { auth } from "../../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { APIEndpoints } from "../../config/Constants";
 
 function AddTransaction(props) {
   const [transaction, setTransaction] = useState("Buy");
   const [coin, setCoin] = useState("Bitcoin");
   const [quantity, setQuantity] = useState(0);
   const [pricePerCoin, setPricePerCoin] = useState(0);
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(null);
   // Firebase
   const [user] = useAuthState(auth);
-  const userDocRef = db.collection("data").doc(user.uid);
 
-  const submitHandler = () => {
+  const submitHandler = async () => {
     try {
-      // Add Data to Subcollection Document
-      userDocRef.collection(coin).add({
-        transaction: transaction,
-        coin: coin,
-        quantity: quantity,
-        pricePerCoin: pricePerCoin,
-        date: date,
-        totalSpent: quantity * pricePerCoin,
-      });
-      //Add Coin Name to subcollection field
-      userDocRef.get().then((doc) => {
-        //Subcollection field does'nt exist
-        if (doc.data() == undefined) {
-          userDocRef.set({
-            subcollection: [coin],
-          });
-          //Subcollection field  exist
-        } else {
-          const subcollection = doc.data().subcollection;
-          let newArray = subcollection;
-          subcollection.includes(coin)
-            ? {}
-            : newArray.push(coin) &&
-              userDocRef.set({
-                subcollection: newArray,
+      if (quantity != 0 && pricePerCoin != 0 && date != null) {
+        const reqOption = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            transaction: transaction,
+            coin: coin,
+            quantity: quantity,
+            pricePerCoin: pricePerCoin,
+            date: date,
+            totalSpent: quantity * pricePerCoin,
+            uid: user.uid,
+          }),
+        };
+        fetch(APIEndpoints.ADD_TRANSACTION, reqOption).then((response) => {
+          response.json().then((res) => {
+            if (res.status == 500) {
+              alert("Transaction couldn't be added! Server Error!!");
+            } else {
+              fetch(APIEndpoints.SET_TABLE + user.uid).then((response) => {
+                response.json().then((res) => {
+                  if (res.status == 500) {
+                    alert("Transaction couldn't be set! Reload the page !!");
+                  }
+                });
               });
-        }
-      });
-      setTimeout(() => {
-        location.reload();
-      }, 500);
+            }
+          });
+        });
+      } else {
+        alert("Document Fields Invalid! Please enter all the required data.");
+      }
     } catch (err) {
-      alert("Document Fields Invalid! Please enter all the required data.");
+      console.log("objecterror");
+      alert(err.message);
     }
     props.onSubmit();
   };

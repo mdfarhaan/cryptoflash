@@ -11,7 +11,6 @@ import {
   Avatar,
   Typography,
 } from "@material-ui/core";
-import LoadingData from "../../Utils/LoadingData";
 
 function TableContent(props) {
   //Table Contents

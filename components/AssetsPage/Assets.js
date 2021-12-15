@@ -3,12 +3,14 @@ import styled from "styled-components";
 import { Typography } from "@material-ui/core";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
-import { auth, db } from "../../firebase";
+import { auth } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { APIEndpoints } from "../config/Constants";
 import AssetsCard from "./AssetsCard";
 import Bar from "../Navbar/Bar";
 import Modal from "@material-ui/core/Modal";
 import LoadingData from "../Utils/LoadingData";
+
 function Assets() {
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 1224px)",
@@ -16,9 +18,6 @@ function Assets() {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   //Fetch Data
   const [user] = useAuthState(auth);
-
-  const dataRef = db.collection("data").doc(user.uid);
-  const tableRef = db.collection("table").doc(user.uid);
   const [tableData, setTableData] = useState([]);
   const [showLoadingData, setShowLoadingData] = useState(true);
   const [dataExist, setDataExist] = useState(true);
@@ -26,26 +25,25 @@ function Assets() {
   const modalClose = () => {
     setShowLoadingData(false);
   };
+
+  //Fetch Table Data from API
+  const fetchData = () => {
+    fetch(APIEndpoints.GET_DATA + user.uid).then((response) => {
+      response.json().then((res) => {
+        if (res.code == 404) {
+          setDataExist(false);
+        } else {
+          setTableData(res.data);
+        }
+      });
+    });
+  };
+
   // Fetch Table Data
   useEffect(() => {
-    var dataArray = [];
-    dataRef.get().then((doc) => {
-      if (doc.exists) {
-        doc.data().subcollection.forEach((collection) => {
-          tableRef.collection(collection).onSnapshot((snapshot) => {
-            snapshot.docs.map((doc) => {
-              dataArray.push(doc.data());
-            });
-            setTimeout(() => {
-              setTableData(dataArray);
-            }, 500);
-          });
-        });
-      } else {
-        setDataExist(false);
-      }
-    });
+    fetchData();
   }, []);
+
   const rows = [...Array(Math.ceil(tableData.length / 4))];
 
   const productRows = rows.map((row, idx) =>

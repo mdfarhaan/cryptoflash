@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { auth, db } from "../../../firebase";
+import { auth } from "../../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
   Paper,
@@ -15,33 +15,30 @@ import {
   Typography,
 } from "@material-ui/core";
 import coinData from "../../Utils/coinData";
+import { APIEndpoints } from "../../config/Constants";
 
 function TableContent() {
   //Data
   const [user] = useAuthState(auth);
-  const dataRef = db.collection("data").doc(user.uid);
   const [tableData, setTableData] = useState([]);
   const [dataExist, setDataExist] = useState(true);
 
+  //Fetch Table Data from API
+  const fetchData = () => {
+    fetch(APIEndpoints.TRANSACTION_DATA + user.uid).then((response) => {
+      response.json().then((res) => {
+        if (res.code == 404) {
+          setDataExist(false);
+        } else {
+          setTableData(res.data);
+        }
+      });
+    });
+  };
+
   // Fetch Table Data
   useEffect(() => {
-    var dataArray = [];
-    dataRef.get().then((doc) => {
-      if (doc.exists) {
-        doc.data().subcollection.forEach((collection) => {
-          dataRef.collection(collection).onSnapshot((snapshot) => {
-            snapshot.docs.map((doc) => {
-              dataArray.push(doc.data());
-            });
-            setTimeout(() => {
-              setTableData(dataArray);
-            }, 500);
-          });
-        });
-      } else {
-        setDataExist(false);
-      }
-    });
+    fetchData();
   }, []);
 
   tableData.sort(function (a, b) {
@@ -191,7 +188,7 @@ function TableContent() {
       <TablePagination
         rowsPerPageOptions={[10, 25, 50]}
         component="div"
-        count={rows.length}
+        count={tableData.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

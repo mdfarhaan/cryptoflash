@@ -6,7 +6,9 @@ import { Typography, Button } from "@material-ui/core";
 function Table(props) {
   return (
     <Container>
-      <Title>Assets</Title>
+      <Header>
+        <Title>Assets</Title>
+      </Header>
       <TableContent dataExist={props.dataExist} tableData={props.tableData} />
       <ButtonContainer>
         <AddButton
@@ -44,4 +46,8 @@ const AddButton = styled(Button)`
 const ButtonContainer = styled.div`
   display: grid;
   place-items: end;
+`;
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;

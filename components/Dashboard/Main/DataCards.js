@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { APIEndpoints } from "../../config/Constants";
 import styled from "styled-components";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../../../firebase";
+import { auth } from "../../../firebase";
 import Cube from "../Cube/Cube";
 import Table from "../Table/Table";
 import Chart from "../Chart/Chart";
 
-function DataCards(props) {
+function DataCards({ onAddTransaction }) {
   const [user] = useAuthState(auth);
-  const dataRef = db.collection("data").doc(user.uid);
-  const tableRef = db.collection("table").doc(user.uid);
+  const [dataExist, setDataExist] = useState(true);
   const [tableData, setTableData] = useState([]);
   //Cube
   const [cubeValue, setCubeValue] = useState(0);
@@ -24,21 +24,16 @@ function DataCards(props) {
   const [chartValueData, setChartValueData] = useState([]);
   const [chartCoinData, setChartCoinData] = useState(0);
 
+  //Fetch Table Data from API
   const fetchData = () => {
-    var dataArray = [];
-    dataRef.get().then((doc) => {
-      if (doc.exists) {
-        doc.data().subcollection.forEach((collection) => {
-          tableRef.collection(collection).onSnapshot((snapshot) => {
-            snapshot.docs.map((doc) => {
-              dataArray.push(doc.data());
-            });
-            setTimeout(() => {
-              setTableData(dataArray);
-            }, 500);
-          });
-        });
-      }
+    fetch(APIEndpoints.GET_DATA + user.uid).then((response) => {
+      response.json().then((res) => {
+        if (res.code == 404) {
+          setDataExist(false);
+        } else {
+          setTableData(res.data);
+        }
+      });
     });
   };
 
@@ -112,7 +107,7 @@ function DataCards(props) {
     <Container>
       <DataContainer>
         <Cube
-          dataExist={props.dataExist}
+          dataExist={dataExist}
           cubeProfit={cubeProfit}
           cubeValue={cubeValue}
           cubeMostProfitCoin={cubeMostProfitCoin}
@@ -122,7 +117,7 @@ function DataCards(props) {
         />
         <ChartContainer>
           <Chart
-            dataExist={props.dataExist}
+            dataExist={dataExist}
             chartCoinData={chartCoinData}
             chartValueData={chartValueData}
             chartCoinName={chartCoinName}
@@ -132,14 +127,42 @@ function DataCards(props) {
       </DataContainer>
       <TableContainer>
         <Table
-          onAddTransaction={props.onAddTransaction}
-          dataExist={props.dataExist}
+          onAddTransaction={onAddTransaction}
+          dataExist={dataExist}
           tableData={tableData}
         />
       </TableContainer>
     </Container>
   );
 }
+
+// export const getServerSideProps = async ({ res }) => {
+//   try {
+//     const result = await fetch(
+//       `https://jsonplaceholder.typicode.com/todos/3`
+//     ).then((response) => response.json());
+//     console.log("result");
+//     return {
+//       props: {
+//         data: result,
+//       },
+//     };
+//   } catch {
+//     res.statusCode = 404;
+//     return {
+//       props: {},
+//     };
+//   }
+// };
+
+export const getStaticProps = async () => {
+  console.log("serverheda");
+  return {
+    props: {
+      data: "from the server",
+    }, // will be passed to the page component as props
+  };
+};
 
 export default DataCards;
 
