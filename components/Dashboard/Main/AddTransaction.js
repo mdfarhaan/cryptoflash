@@ -74,6 +74,7 @@ function AddTransaction(props) {
     { value: "Solana", label: "SOL" },
     { value: "Ripple", label: "XRP" },
     { value: "Shibainu", label: "SHIB" },
+    { value: "Matic", label: "MATIC" },
     { value: "Tether", label: "USDT" },
     { value: "Tron", label: "TRX" },
     { value: "Polkadot", label: "DOT" },
