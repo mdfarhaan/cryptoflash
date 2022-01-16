@@ -68,9 +68,9 @@ function TableContent(props) {
           </TableHead>
 
           <TableBody>
-            {props.tableData.map((row) => {
+            {props.tableData.map((row, idx) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
+                <TableRow hover role="checkbox" tabIndex={-1} key={idx}>
                   {columns.map((column) => {
                     const field = row[column.id];
                     const symbol = row.symbol;

@@ -10,15 +10,20 @@ import AssetsCard from "./AssetsCard";
 import Bar from "../Navbar/Bar";
 import Modal from "@material-ui/core/Modal";
 import LoadingData from "../Utils/LoadingData";
+import coinData from "../Utils/coinData";
+import { getPrice } from "../../services/APIservices";
 
 function Assets() {
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 1224px)",
   });
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const [isLoading, setIsLoading] = useState(true);
+  const [price, setPrice] = useState([]);
   //Fetch Data
   const [user] = useAuthState(auth);
   const [tableData, setTableData] = useState([]);
+  const [coinDoc, setCoinDoc] = useState([]);
   const [showLoadingData, setShowLoadingData] = useState(true);
   const [dataExist, setDataExist] = useState(true);
 
@@ -27,7 +32,7 @@ function Assets() {
   };
 
   //Fetch Table Data from API
-  const fetchData = () => {
+  const fetchData = async () => {
     fetch(APIEndpoints.GET_DATA + user.uid).then((response) => {
       response.json().then((res) => {
         if (res.code == 404) {
@@ -37,6 +42,9 @@ function Assets() {
         }
       });
     });
+    const data = await getPrice();
+    setPrice(data);
+    setIsLoading(false);
   };
 
   // Fetch Table Data
@@ -44,82 +52,95 @@ function Assets() {
     fetchData();
   }, []);
 
-  const rows = [...Array(Math.ceil(tableData.length / 4))];
+  const myCoin = ["Bitcoin", "Cardano", "Ethereum", "Dogecoin"];
+
+  useEffect(() => {
+    let doc = [];
+    myCoin.map((coin) => {
+      doc.push(tableData[coin]);
+    });
+    setCoinDoc(doc);
+  }, [tableData]);
+
+  const rows = [...Array(Math.ceil(coinDoc.length / 4))];
 
   const productRows = rows.map((row, idx) =>
-    tableData.slice(idx * 4, idx * 4 + 4)
+    coinDoc.slice(idx * 4, idx * 4 + 4)
   );
-  const Mobilerows = [...Array(Math.ceil(tableData.length / 2))];
+  const Mobilerows = [...Array(Math.ceil(coinDoc.length / 2))];
 
   const MobileproductRows = Mobilerows.map((row, idx) =>
-    tableData.slice(idx * 2, idx * 2 + 2)
+    coinDoc.slice(idx * 2, idx * 2 + 2)
   );
 
   return (
     <>
       <Bar />
-      {setTimeout(() => {
-        modalClose();
-      }, 2000)}
       <Container>
-        <LoadingDataContainer open={showLoadingData} onClose={modalClose}>
-          <LoadingData />
-        </LoadingDataContainer>
-        <Title>Assets</Title>
-        {isDesktopOrLaptop && (
-          <div>
-            {productRows.map((row, index) => {
-              return (
-                <CardContainer key={index}>
-                  {row.map((card) => {
-                    return (
-                      <motion.div
-                        key={card.name}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <AssetsCard
-                          key={card.name}
-                          name={card.name}
-                          img={card.img}
-                          holdings={card.holdings}
-                          value={card.value}
-                          symbol={card.symbol}
-                        />
-                      </motion.div>
-                    );
-                  })}
-                </CardContainer>
-              );
-            })}
-          </div>
-        )}
-        {isTabletOrMobile && (
-          <div>
-            {MobileproductRows.map((row, index) => {
-              return (
-                <CardContainer key={index}>
-                  {row.map((card) => {
-                    return (
-                      <AssetsCard
-                        key={card.name}
-                        name={card.name}
-                        img={card.img}
-                        holdings={card.holdings}
-                        value={card.value}
-                        symbol={card.symbol}
-                      />
-                    );
-                  })}
-                </CardContainer>
-              );
-            })}
-          </div>
-        )}
-        {dataExist == false && (
-          <center>
-            <NoDataText>No Data</NoDataText>
-          </center>
+        {isLoading ? (
+          <LoadingDataContainer open={showLoadingData} onClose={modalClose}>
+            <LoadingData />
+          </LoadingDataContainer>
+        ) : (
+          <>
+            <Title>Assets</Title>
+            {isDesktopOrLaptop && (
+              <div>
+                {productRows.map((row, index) => {
+                  return (
+                    <CardContainer key={index}>
+                      {row.map((card) => {
+                        let currentPrice =
+                          price[`${card?.symbol.toLowerCase()}inr`].last;
+                        return (
+                          <motion.div
+                            key={card.coin}
+                            whileHover={{ scale: 1.1 }}
+                          >
+                            <AssetsCard
+                              key={card.coin}
+                              name={card.coin}
+                              img={coinData[card.coin].img}
+                              holdings={card.holding}
+                              value={currentPrice * card.holding}
+                              symbol={card.symbol}
+                            />
+                          </motion.div>
+                        );
+                      })}
+                    </CardContainer>
+                  );
+                })}
+              </div>
+            )}
+            {isTabletOrMobile && (
+              <div>
+                {MobileproductRows.map((row, index) => {
+                  return (
+                    <CardContainer key={index}>
+                      {row.map((card) => {
+                        return (
+                          <AssetsCard
+                            key={card.name}
+                            name={card.name}
+                            img={card.img}
+                            holdings={card.holdings}
+                            value={card.value}
+                            symbol={card.symbol}
+                          />
+                        );
+                      })}
+                    </CardContainer>
+                  );
+                })}
+              </div>
+            )}
+            {dataExist == false && (
+              <center>
+                <NoDataText>No Data</NoDataText>
+              </center>
+            )}
+          </>
         )}
       </Container>
     </>

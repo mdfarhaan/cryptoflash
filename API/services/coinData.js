@@ -47,6 +47,10 @@ const coinData = {
     symbol: "BAT",
     img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/bat",
   },
+  Matic: {
+    symbol: "BAT",
+    img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/matic",
+  },
 };
 
 module.exports = coinData;

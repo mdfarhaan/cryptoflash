@@ -58,8 +58,13 @@ const addTransaction = async (data, uid) => {
             let newObj = {};
             const table = doc.data().table;
             if (table[data.coin]) {
-              table[data.coin].holding += data.quantity;
-              table[data.coin].invested += data.quantity * data.pricePerCoin;
+              if (data.transaction == "Buy") {
+                table[data.coin].holding += data.quantity;
+                table[data.coin].invested += data.quantity * data.pricePerCoin;
+              } else {
+                table[data.coin].holding -= data.quantity;
+                table[data.coin].invested -= data.quantity * data.pricePerCoin;
+              }
               newObj = table;
             } else {
               newObj = {

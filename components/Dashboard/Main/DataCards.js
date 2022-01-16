@@ -52,7 +52,7 @@ function DataCards({ onAddTransaction }) {
     fetchData();
   }, []);
 
-  const myCoin = ["Bitcoin", "Cardano", "Ethereum"];
+  const myCoin = ["Bitcoin", "Cardano", "Ethereum", "Dogecoin"];
 
   useEffect(() => {
     let doc = [];
@@ -63,68 +63,58 @@ function DataCards({ onAddTransaction }) {
   }, [tableData]);
 
   // //Fetch Cube Data
-  // useEffect(() => {
-  //   var value = 0;
-  //   var profit = 0;
-  //   var ProfitArray = [];
-  //   //Most Profit
-  //   var mostProfitcoin;
-  //   var mostProfit = 0;
-  //   //Least Profit
-  //   var leastProfitcoin;
-  //   var leastProfit = 0;
-  //   coinDoc.forEach((doc, idx) => {
-  //     value =
-  //       parseFloat(value) +
-  //       parseFloat(
-  //         price[`${doc?.symbol.toLowerCase()}inr`]?.last * doc?.holding
-  //       ).toFixed(2);
+  useEffect(() => {
+    var value = 0;
+    var profit = 0;
+    var profitArray = [];
+    var coinName = [];
+    var valueArray = [];
+    //Most Profit
+    var mostProfitcoin;
+    var mostProfit = 0;
+    //Least Profit
+    var leastProfitcoin;
+    var leastProfit = 0;
+    coinDoc.map((doc) => {
+      //Cube operations
+      let currentVal =
+        price[`${doc?.symbol.toLowerCase()}inr`]?.last * doc?.holding;
+      let currentProfit = currentVal - doc.invested;
+      value += currentVal;
+      profit += currentProfit;
+      profitArray.push(currentProfit.toFixed(0));
+      //Chart operations
+      coinName.push(doc.coin);
+      valueArray.push(currentVal.toFixed(0));
+    });
+    mostProfit = Math.max(...profitArray);
+    leastProfit = Math.min(...profitArray);
 
-  //     console.log(value);
-  //     // value = value + doc.value;
-  //     // profit = profit + doc.pandl;
-  //     // ProfitArray.push(doc.pandl.toFixed(0));
-  //   });
-  //   mostProfit = Math.max(...ProfitArray);
-  //   leastProfit = Math.min(...ProfitArray);
+    //Most and Least Profit
+    coinDoc.map((doc) => {
+      let currentVal =
+        price[`${doc?.symbol.toLowerCase()}inr`]?.last * doc?.holding;
+      let currentProfit = currentVal - doc.invested;
+      if (mostProfit == currentProfit.toFixed(0)) {
+        mostProfitcoin = doc.coin;
+      } else if (leastProfit == currentProfit.toFixed(0)) {
+        leastProfitcoin = doc.coin;
+      }
+    });
 
-  //   //Most and Least Profit
-  //   // coinDoc.forEach((doc) => {
-  //   //   if (mostProfit == doc.pandl.toFixed(0)) {
-  //   //     mostProfitcoin = doc.name;
-  //   //   } else if (leastProfit == doc.pandl.toFixed(0)) {
-  //   //     leastProfitcoin = doc.name;
-  //   //   }
-  //   // });
-  //   // setTimeout(() => {
-  //   //   setCubeValue(value.toFixed(0));
-  //   //   setCubeProfit(profit.toFixed(0));
-  //   //   setCubeMostProfitCoin(mostProfitcoin);
-  //   //   setCubeMostProfit(mostProfit);
-  //   //   setCubeLeastProfitCoin(leastProfitcoin);
-  //   //   setCubeLeastProfit(leastProfit);
-  //   // }, 2000);
-  // }, [coinDoc]);
-
-  // //Fetch Chart Data
-  // useEffect(() => {
-  //   var value = 0;
-  //   var coinName = [];
-  //   var profitArray = [];
-  //   var valueArray = [];
-  //   tableData.forEach((doc) => {
-  //     value = value + doc.value;
-  //     coinName.push(doc.name);
-  //     profitArray.push(doc.pandl.toFixed(0));
-  //     valueArray.push(doc.value.toFixed(0));
-  //   });
-  //   setTimeout(() => {
-  //     setChartCoinName(coinName);
-  //     setChartProfitData(profitArray);
-  //     setChartValueData(valueArray);
-  //     setChartCoinData(value);
-  //   }, 2000);
-  // }, [tableData]);
+    //Cube
+    setCubeValue(value.toFixed(0));
+    setCubeProfit(profit.toFixed(0));
+    setCubeMostProfitCoin(mostProfitcoin);
+    setCubeMostProfit(mostProfit);
+    setCubeLeastProfitCoin(leastProfitcoin);
+    setCubeLeastProfit(leastProfit);
+    //Chart
+    setChartCoinName(coinName);
+    setChartProfitData(profitArray);
+    setChartValueData(valueArray);
+    setChartCoinData(value);
+  }, [isLoading]);
 
   coinDoc.sort((a, b) => {
     return b.value - a.value;
