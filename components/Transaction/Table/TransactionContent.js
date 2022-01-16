@@ -101,19 +101,6 @@ function TableContent() {
     return { img, name, symbol, quantity, buyprice, totalspent, date, type };
   }
 
-  const rows = [
-    createData(
-      "img",
-      "Ethereum",
-      "ETH",
-      2,
-      2500,
-      5000,
-      "Sat Aug 28 2021 01:51:23",
-      "Buy"
-    ),
-  ];
-
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 

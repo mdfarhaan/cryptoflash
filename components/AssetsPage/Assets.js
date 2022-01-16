@@ -33,7 +33,7 @@ function Assets() {
 
   //Fetch Table Data from API
   const fetchData = async () => {
-    fetch(APIEndpoints.GET_DATA + user.uid).then((response) => {
+    await fetch(APIEndpoints.GET_DATA + user.uid).then((response) => {
       response.json().then((res) => {
         if (res.code == 404) {
           setDataExist(false);
@@ -91,7 +91,7 @@ function Assets() {
                     <CardContainer key={index}>
                       {row.map((card) => {
                         let currentPrice =
-                          price[`${card?.symbol.toLowerCase()}inr`].last;
+                          price[`${card?.symbol.toLowerCase()}inr`]?.last;
                         return (
                           <motion.div
                             key={card.coin}

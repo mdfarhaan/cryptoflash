@@ -1,28 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { useRouter } from "next/router";
-import { useMediaQuery } from "react-responsive";
 import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 
 function HeaderHome(props) {
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 1224px)",
-  });
-
-  const router = useRouter();
   return (
     <Container>
       <Navbar position="sticky">
         <Bar>
           <Title>CRYPTO FLASH</Title>
-
-          <DashboardBtn
-            variant="contained"
-            color="primary"
-            onClick={() => router.push("/dashboard")}
-          >
-            {isDesktopOrLaptop ? "Go to the Dashboard" : "Dashboard"}
-          </DashboardBtn>
         </Bar>
       </Navbar>
     </Container>
@@ -56,10 +41,5 @@ const Title = styled(Typography)`
   @media (max-width: 1224px) {
     font-size: 40px;
     width: 100%;
-  }
-`;
-const DashboardBtn = styled(Button)`
-  @media (max-width: 1224px) {
-    font-size: 20px;
   }
 `;
