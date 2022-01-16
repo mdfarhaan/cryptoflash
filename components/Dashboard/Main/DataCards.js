@@ -6,11 +6,17 @@ import { auth } from "../../../firebase";
 import Cube from "../Cube/Cube";
 import Table from "../Table/Table";
 import Chart from "../Chart/Chart";
+import { getPrice } from "../../../services/APIservices";
 
 function DataCards({ onAddTransaction }) {
+  const [isLoading, setIsLoading] = useState(true);
+  //Table
+  const [price, setPrice] = useState([]);
   const [user] = useAuthState(auth);
   const [dataExist, setDataExist] = useState(true);
   const [tableData, setTableData] = useState([]);
+  const [coins, setCoins] = useState([]);
+  const [coinDoc, setCoinDoc] = useState([]);
   //Cube
   const [cubeValue, setCubeValue] = useState(0);
   const [cubeProfit, setCubeProfit] = useState(0);
@@ -25,16 +31,20 @@ function DataCards({ onAddTransaction }) {
   const [chartCoinData, setChartCoinData] = useState(0);
 
   //Fetch Table Data from API
-  const fetchData = () => {
-    fetch(APIEndpoints.GET_DATA + user.uid).then((response) => {
+  const fetchData = async () => {
+    await fetch(APIEndpoints.GET_DATA + user.uid).then((response) => {
       response.json().then((res) => {
         if (res.code == 404) {
           setDataExist(false);
         } else {
           setTableData(res.data);
+          setCoins(res.coins);
         }
       });
     });
+    const data = await getPrice();
+    setPrice(data);
+    setIsLoading(false);
   };
 
   // Fetch Table Data
@@ -42,96 +52,122 @@ function DataCards({ onAddTransaction }) {
     fetchData();
   }, []);
 
-  //Fetch Cube Data
-  useEffect(() => {
-    var value = 0;
-    var profit = 0;
-    var ProfitArray = [];
-    //Most Profit
-    var mostProfitcoin;
-    var mostProfit = 0;
-    //Least Profit
-    var leastProfitcoin;
-    var leastProfit = 0;
-    tableData.forEach((doc) => {
-      value = value + doc.value;
-      profit = profit + doc.pandl;
-      ProfitArray.push(doc.pandl.toFixed(0));
-    });
-    mostProfit = Math.max(...ProfitArray);
-    leastProfit = Math.min(...ProfitArray);
+  const myCoin = ["Bitcoin", "Cardano", "Ethereum"];
 
-    //Most and Least Profit
-    tableData.forEach((doc) => {
-      if (mostProfit == doc.pandl.toFixed(0)) {
-        mostProfitcoin = doc.name;
-      } else if (leastProfit == doc.pandl.toFixed(0)) {
-        leastProfitcoin = doc.name;
-      }
+  useEffect(() => {
+    let doc = [];
+    myCoin.map((coin) => {
+      doc.push(tableData[coin]);
     });
-    setTimeout(() => {
-      setCubeValue(value.toFixed(0));
-      setCubeProfit(profit.toFixed(0));
-      setCubeMostProfitCoin(mostProfitcoin);
-      setCubeMostProfit(mostProfit);
-      setCubeLeastProfitCoin(leastProfitcoin);
-      setCubeLeastProfit(leastProfit);
-    }, 2000);
+    setCoinDoc(doc);
   }, [tableData]);
 
-  //Fetch Chart Data
-  useEffect(() => {
-    var value = 0;
-    var coinName = [];
-    var profitArray = [];
-    var valueArray = [];
-    tableData.forEach((doc) => {
-      value = value + doc.value;
-      coinName.push(doc.name);
-      profitArray.push(doc.pandl.toFixed(0));
-      valueArray.push(doc.value.toFixed(0));
-    });
-    setTimeout(() => {
-      setChartCoinName(coinName);
-      setChartProfitData(profitArray);
-      setChartValueData(valueArray);
-      setChartCoinData(value);
-    }, 2000);
-  }, [tableData]);
+  // //Fetch Cube Data
+  // useEffect(() => {
+  //   var value = 0;
+  //   var profit = 0;
+  //   var ProfitArray = [];
+  //   //Most Profit
+  //   var mostProfitcoin;
+  //   var mostProfit = 0;
+  //   //Least Profit
+  //   var leastProfitcoin;
+  //   var leastProfit = 0;
+  //   coinDoc.forEach((doc, idx) => {
+  //     value =
+  //       parseFloat(value) +
+  //       parseFloat(
+  //         price[`${doc?.symbol.toLowerCase()}inr`]?.last * doc?.holding
+  //       ).toFixed(2);
 
-  tableData.sort((a, b) => {
+  //     console.log(value);
+  //     // value = value + doc.value;
+  //     // profit = profit + doc.pandl;
+  //     // ProfitArray.push(doc.pandl.toFixed(0));
+  //   });
+  //   mostProfit = Math.max(...ProfitArray);
+  //   leastProfit = Math.min(...ProfitArray);
+
+  //   //Most and Least Profit
+  //   // coinDoc.forEach((doc) => {
+  //   //   if (mostProfit == doc.pandl.toFixed(0)) {
+  //   //     mostProfitcoin = doc.name;
+  //   //   } else if (leastProfit == doc.pandl.toFixed(0)) {
+  //   //     leastProfitcoin = doc.name;
+  //   //   }
+  //   // });
+  //   // setTimeout(() => {
+  //   //   setCubeValue(value.toFixed(0));
+  //   //   setCubeProfit(profit.toFixed(0));
+  //   //   setCubeMostProfitCoin(mostProfitcoin);
+  //   //   setCubeMostProfit(mostProfit);
+  //   //   setCubeLeastProfitCoin(leastProfitcoin);
+  //   //   setCubeLeastProfit(leastProfit);
+  //   // }, 2000);
+  // }, [coinDoc]);
+
+  // //Fetch Chart Data
+  // useEffect(() => {
+  //   var value = 0;
+  //   var coinName = [];
+  //   var profitArray = [];
+  //   var valueArray = [];
+  //   tableData.forEach((doc) => {
+  //     value = value + doc.value;
+  //     coinName.push(doc.name);
+  //     profitArray.push(doc.pandl.toFixed(0));
+  //     valueArray.push(doc.value.toFixed(0));
+  //   });
+  //   setTimeout(() => {
+  //     setChartCoinName(coinName);
+  //     setChartProfitData(profitArray);
+  //     setChartValueData(valueArray);
+  //     setChartCoinData(value);
+  //   }, 2000);
+  // }, [tableData]);
+
+  coinDoc.sort((a, b) => {
     return b.value - a.value;
   });
 
   return (
     <Container>
-      <DataContainer>
-        <Cube
-          dataExist={dataExist}
-          cubeProfit={cubeProfit}
-          cubeValue={cubeValue}
-          cubeMostProfitCoin={cubeMostProfitCoin}
-          cubeMostProfit={cubeMostProfit}
-          cubeLeastProfitCoin={cubeLeastProfitCoin}
-          cubeLeastProfit={cubeLeastProfit}
-        />
-        <ChartContainer>
-          <Chart
-            dataExist={dataExist}
-            chartCoinData={chartCoinData}
-            chartValueData={chartValueData}
-            chartCoinName={chartCoinName}
-            chartProfitData={chartProfitData}
-          />
-        </ChartContainer>
-      </DataContainer>
-      <TableContainer>
-        <Table
-          onAddTransaction={onAddTransaction}
-          dataExist={dataExist}
-          tableData={tableData}
-        />
-      </TableContainer>
+      {!isLoading ? (
+        <>
+          <DataContainer>
+            <Cube
+              price={price}
+              dataExist={dataExist}
+              cubeProfit={cubeProfit}
+              cubeValue={cubeValue}
+              cubeMostProfitCoin={cubeMostProfitCoin}
+              cubeMostProfit={cubeMostProfit}
+              cubeLeastProfitCoin={cubeLeastProfitCoin}
+              cubeLeastProfit={cubeLeastProfit}
+            />
+            <ChartContainer>
+              <Chart
+                price={price}
+                dataExist={dataExist}
+                chartCoinData={chartCoinData}
+                chartValueData={chartValueData}
+                chartCoinName={chartCoinName}
+                chartProfitData={chartProfitData}
+              />
+            </ChartContainer>
+          </DataContainer>
+          <TableContainer>
+            <Table
+              price={price}
+              onAddTransaction={onAddTransaction}
+              dataExist={dataExist}
+              tableData={coinDoc}
+            />
+          </TableContainer>
+        </>
+      ) : (
+        <h1>Loading</h1>
+      )}
     </Container>
   );
 }

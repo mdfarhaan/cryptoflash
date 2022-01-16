@@ -9,7 +9,11 @@ function Table(props) {
       <Header>
         <Title>Assets</Title>
       </Header>
-      <TableContent dataExist={props.dataExist} tableData={props.tableData} />
+      <TableContent
+        dataExist={props.dataExist}
+        tableData={props.tableData}
+        price={props.price}
+      />
       <ButtonContainer>
         <AddButton
           variant="contained"

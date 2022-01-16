@@ -11,8 +11,10 @@ import {
   Avatar,
   Typography,
 } from "@material-ui/core";
+import coinData from "../../Utils/coinData";
 
 function TableContent(props) {
+  // console.log(props.tableData);
   //Table Contents
   const columns = [
     { id: "img", label: "", minWidth: 10, align: "center" },
@@ -24,13 +26,6 @@ function TableContent(props) {
       minWidth: 100,
       align: "center",
     },
-    // {
-    //   id: "day",
-    //   label: "24h",
-    //   minWidth: 100,
-    //   align: "center",
-    //   format: (value) => value.toLocaleString("en-US"),
-    // },
     {
       id: "holdings",
       label: "Holdings",
@@ -50,7 +45,7 @@ function TableContent(props) {
       label: "Profit/Loss",
       minWidth: 100,
       align: "center",
-      format: (value) => value.toFixed(2),
+      format: (value) => (0.0).toFixed(2),
     },
   ];
 
@@ -77,22 +72,31 @@ function TableContent(props) {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
                   {columns.map((column) => {
-                    const value = row[column.id];
-                    const name = row.name;
-                    const img = row.img;
-
+                    const field = row[column.id];
+                    const symbol = row.symbol;
+                    const price =
+                      props.price[`${symbol.toLowerCase()}inr`].last;
+                    const img = coinData[row.coin].img;
+                    const name = row.coin;
+                    const holdings = row.holding;
+                    const value = (holdings * price).toFixed(2);
+                    const pandl = (value - row.invested).toFixed(2);
                     return (
                       <Cell key={column.id} align={column.align}>
                         {column.id === "img" ? (
                           <Avatar alt={name} src={img} />
+                        ) : column.id === "name" ? (
+                          name
                         ) : column.id === "price" ? (
-                          "₹" + value
+                          "₹" + price
+                        ) : column.id === "holdings" ? (
+                          holdings
                         ) : column.id === "value" ? (
-                          "₹" + column.format(value)
+                          "₹" + value
                         ) : column.id === "pandl" ? (
-                          "₹" + column.format(value)
+                          "₹" + pandl
                         ) : (
-                          value
+                          field
                         )}
                       </Cell>
                     );

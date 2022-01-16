@@ -16,8 +16,9 @@ app.use(express.json());
 
 app.use("/api/v1/add", require("./routes/addTransaction"));
 app.use("/api/v1/data", require("./routes/data"));
-app.use("/api/v1/set", require("./routes/setTableData"));
 app.use("/api/v1/transactions", require("./routes/transactions"));
+
+app.use("/api/v1/price", require("./routes/price"));
 
 app.listen(PORT, (err) => {
   err ? console.log(err) : console.log("Server running on Port: " + PORT);

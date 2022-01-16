@@ -44,14 +44,6 @@ function AddTransaction(props) {
           response.json().then((res) => {
             if (res.status == 500) {
               alert("Transaction couldn't be added! Server Error!!");
-            } else {
-              fetch(APIEndpoints.SET_TABLE + user.uid).then((response) => {
-                response.json().then((res) => {
-                  if (res.status == 500) {
-                    alert("Transaction couldn't be set! Reload the page !!");
-                  }
-                });
-              });
             }
           });
         });
