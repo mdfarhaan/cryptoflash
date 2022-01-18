@@ -48,7 +48,7 @@ const coinData = {
     img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/bat",
   },
   Matic: {
-    symbol: "BAT",
+    symbol: "MATIC",
     img: "https://cryptoflash-icons-api.herokuapp.com/svg/icon/matic",
   },
 };

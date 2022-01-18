@@ -20,6 +20,8 @@ function Assets() {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   const [isLoading, setIsLoading] = useState(true);
   const [price, setPrice] = useState([]);
+  const [coins, setCoins] = useState([]);
+
   //Fetch Data
   const [user] = useAuthState(auth);
   const [tableData, setTableData] = useState([]);
@@ -39,6 +41,7 @@ function Assets() {
           setDataExist(false);
         } else {
           setTableData(res.data);
+          setCoins(res.coins);
         }
       });
     });
@@ -52,15 +55,17 @@ function Assets() {
     fetchData();
   }, []);
 
-  const myCoin = ["Bitcoin", "Cardano", "Ethereum", "Dogecoin"];
-
   useEffect(() => {
     let doc = [];
-    myCoin.map((coin) => {
-      doc.push(tableData[coin]);
-    });
+    coins?.length == undefined
+      ? setCoinDoc([])
+      : coins.length == 0
+      ? setCoinDoc([])
+      : coins.map((coin) => {
+          doc.push(tableData[coin]);
+        });
     setCoinDoc(doc);
-  }, [tableData]);
+  }, [isLoading]);
 
   const rows = [...Array(Math.ceil(coinDoc.length / 4))];
 

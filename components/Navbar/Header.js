@@ -71,7 +71,7 @@ function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const menuOpen = Boolean(anchorEl);
   const profilePic =
-    user.photoURL == null
+    user?.photoURL == null
       ? "https://avatars.dicebear.com/api/bottts/" +
         user.email.split("@") +
         ".svg"

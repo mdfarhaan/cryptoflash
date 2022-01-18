@@ -45,10 +45,12 @@ const addTransaction = async (data, uid) => {
             userDocRef.set({
               subcollection: [data.coin],
               table: {
-                coin: data.coin,
-                symbol: symbol,
-                invested: data.quantity * data.pricePerCoin,
-                holding: data.quantity,
+                [data.coin]: {
+                  coin: data.coin,
+                  symbol: symbol,
+                  invested: data.quantity * data.pricePerCoin,
+                  holding: data.quantity,
+                },
               },
             });
             //Subcollection field exists

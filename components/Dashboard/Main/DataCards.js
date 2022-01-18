@@ -47,22 +47,30 @@ function DataCards({ onAddTransaction }) {
     setIsLoading(false);
   };
 
+  //Fetch price every 5 sec
+  // const interval = setInterval(async function () {
+  //   const data = await getPrice();
+  //   setPrice(data);
+  // }, 3000);
+
   // Fetch Table Data
   useEffect(() => {
     fetchData();
   }, []);
 
-  const myCoin = ["Bitcoin", "Cardano", "Ethereum", "Dogecoin"];
-
   useEffect(() => {
     let doc = [];
-    myCoin.map((coin) => {
-      doc.push(tableData[coin]);
-    });
+    coins?.length == undefined
+      ? setCoinDoc([])
+      : coins.length == 0
+      ? setCoinDoc([])
+      : coins.map((coin) => {
+          doc.push(tableData[coin]);
+        });
     setCoinDoc(doc);
-  }, [tableData]);
+  }, [isLoading]);
 
-  // //Fetch Cube Data
+  //Fetch Cube Data
   useEffect(() => {
     var value = 0;
     var profit = 0;
@@ -114,7 +122,7 @@ function DataCards({ onAddTransaction }) {
     setChartProfitData(profitArray);
     setChartValueData(valueArray);
     setChartCoinData(value);
-  }, [isLoading]);
+  }, [coinDoc]);
 
   coinDoc.sort((a, b) => {
     return b.value - a.value;

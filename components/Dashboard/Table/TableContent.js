@@ -75,7 +75,7 @@ function TableContent(props) {
                     const field = row[column.id];
                     const symbol = row.symbol;
                     const price =
-                      props.price[`${symbol.toLowerCase()}inr`].last;
+                      props.price[`${symbol.toLowerCase()}inr`]?.last;
                     const img = coinData[row.coin].img;
                     const name = row.coin;
                     const holdings = row.holding;

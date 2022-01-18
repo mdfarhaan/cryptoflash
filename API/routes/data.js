@@ -16,7 +16,7 @@ router.get("/:uid", async (req, res) => {
           code: 200,
         });
       });
-    } else if (value == 405) {
+    } else if (value == 404) {
       res.send({ data: "No Data", status: "success", code: 404 });
     } else {
       res.send({ data: "Internal server error!", status: "failed", code: 500 });
