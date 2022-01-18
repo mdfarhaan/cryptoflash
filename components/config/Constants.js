@@ -1,5 +1,4 @@
-// const BASE_ENDPOINT = process.env.NEXT_PUBLIC_API_BASE;
-const BASE_ENDPOINT = "http://localhost:5000";
+const BASE_ENDPOINT = process.env.NEXT_PUBLIC_API_BASE;
 
 export const APIEndpoints = {
   ADD_TRANSACTION: `${BASE_ENDPOINT}/api/v1/add/`,
