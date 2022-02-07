@@ -72,9 +72,9 @@ function Header() {
   const menuOpen = Boolean(anchorEl);
   const profilePic =
     user?.photoURL == null
-      ? "https://avatars.dicebear.com/api/bottts/" +
-        user.email.split("@") +
-        ".svg"
+      ? `https://avatars.dicebear.com/api/avataaars/${user.email.split(
+          "@"
+        )}.svg`
       : user.photoURL;
   const logOut = () => {
     router.push("/");

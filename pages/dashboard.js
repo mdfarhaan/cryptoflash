@@ -24,7 +24,7 @@ export default function DashboardPage() {
         <meta name="Dashboard" />
         <link rel="icon" href="/fav.svg" />
       </Head>
-      {!user ? <Home /> : <Dashboard />}
+      {user ? <Dashboard /> : <Home />}
     </div>
   );
 }

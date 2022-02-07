@@ -1,25 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import TransactionTable from "./Table/TransactionTable";
 import Modal from "@material-ui/core/Modal";
-import LoadingData from "../Utils/LoadingData";
 import Bar from "../Navbar/Bar";
 
 function Transaction() {
-  const [showLoadingData, setShowLoadingData] = useState(true);
-
-  const modalClose = () => {
-    setShowLoadingData(false);
-  };
   return (
     <div>
       <Bar />
-      {setTimeout(() => {
-        modalClose();
-      }, 2000)}
-      <LoadingDataContainer open={showLoadingData} onClose={modalClose}>
-        <LoadingData />
-      </LoadingDataContainer>
       <Container>
         <TransactionTable />
       </Container>
@@ -38,7 +26,4 @@ const Container = styled.div`
     padding-left: 50px;
     place-items: center;
   }
-`;
-const LoadingDataContainer = styled(Modal)`
-  backdrop-filter: blur(8px);
 `;

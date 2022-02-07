@@ -7,6 +7,7 @@ import Cube from "../Cube/Cube";
 import Table from "../Table/Table";
 import Chart from "../Chart/Chart";
 import { getPrice } from "../../../services/APIservices";
+import Loading from "../../Utils/Loading";
 
 function DataCards({ onAddTransaction }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -164,30 +165,11 @@ function DataCards({ onAddTransaction }) {
           </TableContainer>
         </>
       ) : (
-        <h1>Loading</h1>
+        <Loading />
       )}
     </Container>
   );
 }
-
-// export const getServerSideProps = async ({ res }) => {
-//   try {
-//     const result = await fetch(
-//       `https://jsonplaceholder.typicode.com/todos/3`
-//     ).then((response) => response.json());
-//     console.log("result");
-//     return {
-//       props: {
-//         data: result,
-//       },
-//     };
-//   } catch {
-//     res.statusCode = 404;
-//     return {
-//       props: {},
-//     };
-//   }
-// };
 
 export const getStaticProps = async () => {
   console.log("serverheda");

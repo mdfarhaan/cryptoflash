@@ -6,7 +6,7 @@ function Loading() {
   return (
     <LoadingContainer>
       <center>
-        <Circle color="#2B3038" size={60}></Circle>
+        <Circle color="#FFF" size={60}></Circle>
       </center>
     </LoadingContainer>
   );
@@ -19,4 +19,6 @@ const LoadingContainer = styled.div`
   display: grid;
   place-items: center;
   height: 100vh;
+  backdrop-filter: blur(8px);
+  width: 80vw;
 `;

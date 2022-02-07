@@ -6,7 +6,6 @@ import AddTransaction from "./AddTransaction";
 import Bar from "../../Navbar/Bar";
 import Modal from "@material-ui/core/Modal";
 import DataCards from "./DataCards";
-import LoadingData from "../../Utils/LoadingData";
 
 function Dashboard() {
   //Data
@@ -23,11 +22,7 @@ function Dashboard() {
   // Window Functions
   const [showData, setShowData] = useState(true);
   const [showFormContainer, setShowFormContainer] = useState(false);
-  const [showLoadingData, setShowLoadingData] = useState(true);
 
-  const modalClose = () => {
-    setShowLoadingData(false);
-  };
   const onAddTransaction = () => {
     setShowData(false);
     setShowFormContainer(true);

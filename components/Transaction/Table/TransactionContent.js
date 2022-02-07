@@ -16,8 +16,11 @@ import {
 } from "@material-ui/core";
 import coinData from "../../Utils/coinData";
 import { APIEndpoints } from "../../config/Constants";
+import Loading from "../../Utils/Loading";
 
 function TableContent() {
+  const [isLoading, setIsLoading] = useState(true);
+
   //Data
   const [user] = useAuthState(auth);
   const [tableData, setTableData] = useState([]);
@@ -29,8 +32,10 @@ function TableContent() {
       response.json().then((res) => {
         if (res.code == 404) {
           setDataExist(false);
+          setIsLoading(false);
         } else {
           setTableData(res.data);
+          setIsLoading(false);
         }
       });
     });
@@ -88,18 +93,6 @@ function TableContent() {
       format: (value) => value.toLocaleString("en-US"),
     },
   ];
-  function createData(
-    img,
-    name,
-    symbol,
-    quantity,
-    buyprice,
-    totalspent,
-    date,
-    type
-  ) {
-    return { img, name, symbol, quantity, buyprice, totalspent, date, type };
-  }
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -113,7 +106,7 @@ function TableContent() {
     setPage(0);
   };
 
-  return (
+  return !isLoading ? (
     <Paper>
       <Container>
         <Table stickyHeader aria-label="sticky table">
@@ -182,6 +175,8 @@ function TableContent() {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
+  ) : (
+    <Loading />
   );
 }
 

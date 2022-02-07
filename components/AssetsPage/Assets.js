@@ -9,7 +9,7 @@ import { APIEndpoints } from "../config/Constants";
 import AssetsCard from "./AssetsCard";
 import Bar from "../Navbar/Bar";
 import Modal from "@material-ui/core/Modal";
-import LoadingData from "../Utils/LoadingData";
+import Loading from "../Utils/Loading";
 import coinData from "../Utils/coinData";
 import { getPrice } from "../../services/APIservices";
 
@@ -83,9 +83,7 @@ function Assets() {
       <Bar />
       <Container>
         {isLoading ? (
-          <LoadingDataContainer open={showLoadingData} onClose={modalClose}>
-            <LoadingData />
-          </LoadingDataContainer>
+          <Loading />
         ) : (
           <>
             <Title>Assets</Title>
@@ -170,9 +168,6 @@ const Title = styled(Typography)`
   font-size: 40px;
   font-weight: bold;
   color: ${(props) => props.theme.text};
-`;
-const LoadingDataContainer = styled(Modal)`
-  backdrop-filter: blur(8px);
 `;
 const NoDataText = styled(Typography)`
   color: ${(props) => props.theme.text};
