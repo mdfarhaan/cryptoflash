@@ -171,51 +171,53 @@ function DataCards({ onAddTransaction }) {
   );
 }
 
-export const getStaticProps = async () => {
-  console.log("serverheda");
-  return {
-    props: {
-      data: "from the server",
-    }, // will be passed to the page component as props
-  };
-};
-
 export default DataCards;
 
 //Styles
 const Container = styled.div`
   display: flex;
-  @media (max-width: 1224px) {
-    padding-left: 0px;
+  justify-content: center;
+
+  @media (max-width: 1420px) {
+    display: block;
+  }
+  @media (max-width: 750px) {
+    align-items: center;
+    justify-content: center;
   }
 `;
 const DataContainer = styled.div`
   margin-top: 60px;
   padding: 60px;
   justify-content: center;
-  @media (max-width: 1224px) {
+  @media (max-width: 1420px) {
     display: flex;
+    padding-bottom: 0;
     justify-content: center;
-    place-items: center;
+    align-items: center;
+    margin-top: 80px;
+    padding: 0px;
+  }
+  @media (max-width: 750px) {
     flex-direction: column;
+    padding: 0px;
   }
 `;
 const TableContainer = styled.div`
   margin-top: 140px;
   display: flex;
   flex-direction: column;
-  @media (max-width: 1224px) {
-    width: 100%;
-    padding-left: 40px;
-    padding-right: 20px;
+  @media (max-width: 1420px) {
+    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+  @media (max-width: 750px) {
+    display: none;
   }
 `;
 const ChartContainer = styled.div`
   display: grid;
   padding: 10px;
   place-items: center;
-  @media (max-width: 1224px) {
-    padding-top: 35px;
-    padding-left: 30px;
-  }
 `;

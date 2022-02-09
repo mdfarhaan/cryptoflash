@@ -5,9 +5,10 @@ import Drawer from "./Drawer";
 import Header from "./Header";
 function Bar() {
   const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 1224px)",
+    query: "(min-width: 1500px)",
   });
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1499px)" });
   const [showDrawer, setShowDrawer] = useState(false);
   const onShowDrawer = () => {
     setShowDrawer(true);
@@ -43,5 +44,9 @@ function Bar() {
 export default Bar;
 
 // Styles
-const MobileContainer = styled.div``;
+const MobileContainer = styled.div`
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
 const WebContainer = styled.div``;

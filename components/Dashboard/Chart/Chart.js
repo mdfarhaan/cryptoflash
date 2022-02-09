@@ -126,7 +126,7 @@ const Container = styled.div`
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   border-radius: 20px;
   width: 440px;
-  @media (max-width: 1224px) {
+  @media (max-width: 950px) {
     width: 320px;
   }
 `;

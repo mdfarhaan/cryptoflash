@@ -28,7 +28,7 @@ import { CgMenuLeftAlt } from "react-icons/cg/";
 function Header() {
   const [user] = useAuthState(auth);
   //MediaQuery
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1499px)" });
   const router = useRouter();
   //Theme Set
   const DarkMode = {

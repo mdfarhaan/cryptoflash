@@ -31,7 +31,7 @@ const Container = styled.div`
   height: 185px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-  @media (max-width: 1224px) {
+  @media (max-width: 950px) {
     width: 150px;
     height: 150px;
   }
@@ -39,7 +39,7 @@ const Container = styled.div`
 const Title = styled(Typography)`
   font-size: 40px;
   color: ${(props) => props.theme.text};
-  @media (max-width: 1224px) {
+  @media (max-width: 950px) {
     font-size: 30px;
   }
 `;
@@ -47,7 +47,7 @@ const Price = styled(Typography)`
   font-size: 42px;
   color: ${(props) => props.theme.text};
   font-weight: bold;
-  @media (max-width: 1224px) {
+  @media (max-width: 950px) {
     font-size: 38px;
   }
 `;
@@ -57,7 +57,7 @@ const ValueDiv = styled.div`
 const Value = styled(Typography)`
   font-size: 25px;
   color: ${(props) => props.theme.text};
-  @media (max-width: 1224px) {
+  @media (max-width: 950px) {
     font-size: 25px;
   }
 `;

@@ -47,14 +47,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;
-  @media screen and (max-width: 1224px) {
-    display: flex;
-    flex-direction: column;
-    place-items: center;
-    justify-content: center;
-    padding-top: 50px;
-    padding-left: 40px;
-  }
 `;
 const Row1 = styled.div`
   display: flex;

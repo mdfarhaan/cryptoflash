@@ -51,7 +51,6 @@ function AddTransaction(props) {
         alert("Document Fields Invalid! Please enter all the required data.");
       }
     } catch (err) {
-      console.log("objecterror");
       alert(err.message);
     }
     props.onSubmit();

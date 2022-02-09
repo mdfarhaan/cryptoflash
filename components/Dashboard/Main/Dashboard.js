@@ -4,7 +4,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../../firebase";
 import AddTransaction from "./AddTransaction";
 import Bar from "../../Navbar/Bar";
-import Modal from "@material-ui/core/Modal";
 import DataCards from "./DataCards";
 
 function Dashboard() {
@@ -39,7 +38,10 @@ function Dashboard() {
         <Bar />
         {showData && (
           <Content>
-            <DataCards onAddTransaction={onAddTransaction} />
+            <DataCards
+              onAddTransaction={onAddTransaction}
+              onTransactionSubmit={onAddTransaction}
+            />
           </Content>
         )}
 
@@ -67,12 +69,5 @@ const FormContainer = styled.div`
 `;
 const Content = styled.div`
   display: flex;
-  margin-left: 300px;
-
-  @media (max-width: 1224px) {
-    padding-left: 0px;
-  }
-`;
-const LoadingDataContainer = styled(Modal)`
-  backdrop-filter: blur(8px);
+  justify-content: center;
 `;
