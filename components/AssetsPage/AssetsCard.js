@@ -14,7 +14,7 @@ function Assets(props) {
           <Content>
             <Text>{props.holdings + props.symbol}</Text>
             <Text>|</Text>
-            <Text>{"₹" + props.value.toFixed(2)}</Text>
+            <Text>{"₹" + props.value?.toFixed(2)}</Text>
           </Content>
         </Data>
       </Card>
@@ -29,10 +29,6 @@ const Container = styled.div`
   width: 20vw;
   margin: 1em auto -45px;
   border-radius: 50%;
-  @media (max-width: 1224px) {
-    width: 100px;
-    padding-left: 60px;
-  }
 `;
 
 const Image = styled(Avatar)`
@@ -41,17 +37,15 @@ const Image = styled(Avatar)`
   border-radius: 50%;
   height: 100px;
   width: 100px;
-  @media (max-width: 1224px) {
-    height: 70px;
-    width: 70px;
-    margin-left: -14px;
+  @media (max-width: 820px) {
+    height: 65px;
+    width: 65px;
   }
 `;
 
 const Card = styled.div`
   margin: 1em auto 1em;
   padding: 40px 1em 1em;
-  height: 10vh;
   width: 15vw;
   border-radius: 1em;
   overflow: hidden;
@@ -65,11 +59,16 @@ const Card = styled.div`
     margin: -80px auto 0;
     box-shadow: 0 0 0 3000px white;
   }
-  @media (max-width: 1224px) {
-    width: 120px;
-    height: 50px;
+  @media (max-width: 1500px) {
+    width: 22vw;
     :before {
-      width: 85px;
+      width: 110px;
+    }
+  }
+  @media (max-width: 820px) {
+    width: 30vw;
+    :before {
+      width: 80px;
     }
   }
 `;
@@ -78,11 +77,12 @@ const Data = styled.div`
   place-items: center;
 `;
 const Title = styled(Typography)`
-  font-size: 35px;
+  font-size: 1.8vw;
   color: black;
+
   font-weight: bold;
-  @media (max-width: 1224px) {
-    font-size: 20px;
+  @media (max-width: 820px) {
+    font-size: 3.3vw;
   }
 `;
 const Content = styled.div`
@@ -90,11 +90,14 @@ const Content = styled.div`
   align-items: baseline;
 `;
 const Text = styled(Typography)`
-  font-size: 25px;
+  font-size: 1.3vw;
   color: black;
   margin-right: 10px;
-  @media (max-width: 1224px) {
+  @media (max-width: 1500px) {
+    font-size: 1.8vw;
+  }
+  @media (max-width: 820px) {
+    font-size: 2.5vw;
     font-weight: bold;
-    font-size: 10px;
   }
 `;

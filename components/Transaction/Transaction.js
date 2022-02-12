@@ -6,7 +6,7 @@ import Bar from "../Navbar/Bar";
 
 function Transaction() {
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <Bar />
       <Container>
         <TransactionTable />
@@ -18,9 +18,11 @@ function Transaction() {
 export default Transaction;
 
 const Container = styled.div`
-  padding-left: 300px;
+  display: grid;
+  place-items: center;
   padding-top: 80px;
-  padding-right: 50px;
+  width: 100%;
+
   @media (max-width: 1224px) {
     padding-top: 80px;
     padding-left: 50px;

@@ -177,7 +177,6 @@ export default DataCards;
 const Container = styled.div`
   display: flex;
   justify-content: center;
-
   @media (max-width: 1420px) {
     display: block;
   }

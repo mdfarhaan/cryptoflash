@@ -8,7 +8,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { APIEndpoints } from "../config/Constants";
 import AssetsCard from "./AssetsCard";
 import Bar from "../Navbar/Bar";
-import Modal from "@material-ui/core/Modal";
 import Loading from "../Utils/Loading";
 import coinData from "../Utils/coinData";
 import { getPrice } from "../../services/APIservices";
@@ -26,12 +25,7 @@ function Assets() {
   const [user] = useAuthState(auth);
   const [tableData, setTableData] = useState([]);
   const [coinDoc, setCoinDoc] = useState([]);
-  const [showLoadingData, setShowLoadingData] = useState(true);
   const [dataExist, setDataExist] = useState(true);
-
-  const modalClose = () => {
-    setShowLoadingData(false);
-  };
 
   //Fetch Table Data from API
   const fetchData = async () => {
@@ -87,58 +81,26 @@ function Assets() {
         ) : (
           <>
             <Title>Assets</Title>
-            {isDesktopOrLaptop && (
-              <div>
-                {productRows.map((row, index) => {
-                  return (
-                    <CardContainer key={index}>
-                      {row.map((card) => {
-                        let currentPrice =
-                          price[`${card?.symbol.toLowerCase()}inr`]?.last;
-                        return (
-                          <motion.div
-                            key={card.coin}
-                            whileHover={{ scale: 1.1 }}
-                          >
-                            <AssetsCard
-                              key={card.coin}
-                              name={card.coin}
-                              img={coinData[card.coin].img}
-                              holdings={card.holding}
-                              value={currentPrice * card.holding}
-                              symbol={card.symbol}
-                            />
-                          </motion.div>
-                        );
-                      })}
-                    </CardContainer>
-                  );
-                })}
-              </div>
-            )}
-            {isTabletOrMobile && (
-              <div>
-                {MobileproductRows.map((row, index) => {
-                  return (
-                    <CardContainer key={index}>
-                      {row.map((card) => {
-                        return (
-                          <AssetsCard
-                            key={card.name}
-                            name={card.name}
-                            img={card.img}
-                            holdings={card.holdings}
-                            value={card.value}
-                            symbol={card.symbol}
-                          />
-                        );
-                      })}
-                    </CardContainer>
-                  );
-                })}
-              </div>
-            )}
-            {dataExist == false && (
+            <Grid>
+              {coinDoc.map((card) => {
+                let currentPrice =
+                  price[`${card?.symbol.toLowerCase()}inr`]?.last;
+                return (
+                  <motion.div key={card.coin} whileHover={{ scale: 1.1 }}>
+                    <AssetsCard
+                      key={card.coin}
+                      name={card.coin}
+                      img={coinData[card.coin].img}
+                      holdings={card.holding}
+                      value={currentPrice * card.holding}
+                      symbol={card.symbol}
+                    />
+                  </motion.div>
+                );
+              })}
+            </Grid>
+
+            {!dataExist && (
               <center>
                 <NoDataText>No Data</NoDataText>
               </center>
@@ -154,10 +116,10 @@ export default Assets;
 
 //Styles
 const Container = styled.div`
-  padding-left: 300px;
+  display: grid;
+  place-items: center;
   padding-top: 60px;
   @media (max-width: 1224px) {
-    padding-left: 40px;
     padding-top: 80px;
   }
 `;
@@ -173,4 +135,16 @@ const NoDataText = styled(Typography)`
   color: ${(props) => props.theme.text};
   font-size: 30px;
   padding: 30px;
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  place-content: center;
+  @media (max-width: 1500px) {
+    grid-template-columns: repeat(3, 40%);
+  }
+  @media (max-width: 820px) {
+    grid-template-columns: repeat(2, 60%);
+  }
 `;
