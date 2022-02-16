@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { PORT } = require("./shared/config");
+const { PORT } = require("./src/shared/config");
 const app = express();
 
 const corsOpts = {
@@ -14,11 +14,10 @@ const corsOpts = {
 app.use(cors(corsOpts));
 app.use(express.json());
 
-app.use("/api/v1/add", require("./routes/addTransaction"));
-app.use("/api/v1/data", require("./routes/data"));
-app.use("/api/v1/transactions", require("./routes/transactions"));
-
-app.use("/api/v1/price", require("./routes/price"));
+app.use("/api/v1", require("./src/routes"));
+app.use("/", (req, res) => {
+  res.send("Cryptoflash API");
+});
 
 app.listen(PORT, (err) => {
   err ? console.log(err) : console.log("Server running on Port: " + PORT);
