@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { APIEndpoints } from "../../config/Constants";
 import styled from "styled-components";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../../firebase";
 import Cube from "../Cube/Cube";
 import Table from "../Table/Table";
 import Chart from "../Chart/Chart";
-import { getPrice } from "../../../services/APIservices";
 import Loading from "../../Utils/Loading";
 
-function DataCards({ onAddTransaction }) {
-  const [isLoading, setIsLoading] = useState(true);
+function DataCards({
+  onAddTransaction,
+  dataExist,
+  tableData,
+  coins,
+  price,
+  isLoading,
+}) {
   //Table
-  const [price, setPrice] = useState([]);
-  const [user] = useAuthState(auth);
-  const [dataExist, setDataExist] = useState(true);
-  const [tableData, setTableData] = useState([]);
-  const [coins, setCoins] = useState([]);
   const [coinDoc, setCoinDoc] = useState([]);
   //Cube
   const [cubeValue, setCubeValue] = useState(0);
@@ -30,34 +27,6 @@ function DataCards({ onAddTransaction }) {
   const [chartProfitData, setChartProfitData] = useState([]);
   const [chartValueData, setChartValueData] = useState([]);
   const [chartCoinData, setChartCoinData] = useState(0);
-
-  //Fetch Table Data from API
-  const fetchData = async () => {
-    await fetch(APIEndpoints.GET_DATA + user.uid).then((response) => {
-      response.json().then((res) => {
-        if (res.code == 404) {
-          setDataExist(false);
-        } else {
-          setTableData(res.data);
-          setCoins(res.coins);
-        }
-      });
-    });
-    const data = await getPrice();
-    setPrice(data);
-    setIsLoading(false);
-  };
-
-  //Fetch price every 5 sec
-  // const interval = setInterval(async function () {
-  //   const data = await getPrice();
-  //   setPrice(data);
-  // }, 3000);
-
-  // Fetch Table Data
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   useEffect(() => {
     let doc = [];

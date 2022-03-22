@@ -1,14 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../../firebase";
 import AddTransaction from "./AddTransaction";
 import Bar from "../../Navbar/Bar";
 import DataCards from "./DataCards";
+import { APIEndpoints } from "../../config/Constants";
+import { getPrice } from "../../../services/APIservices";
 
 function Dashboard() {
   //Data
   const [user] = useAuthState(auth);
+  const [price, setPrice] = useState([]);
+  const [dataExist, setDataExist] = useState(true);
+  const [tableData, setTableData] = useState([]);
+  const [coins, setCoins] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  //Fetch Table Data from API
+  const fetchData = async () => {
+    await fetch(APIEndpoints.GET_DATA + user.uid).then((response) => {
+      response.json().then((res) => {
+        if (res.code == 404) {
+          setDataExist(false);
+        } else {
+          setTableData(res.data);
+          setCoins(res.coins);
+        }
+      });
+    });
+    const data = await getPrice();
+    setPrice(data);
+    setIsLoading(false);
+  };
+
+  // Fetch Table Data
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  //Fetch price every 5 sec
+  // const interval = setInterval(async function () {
+  //   const data = await getPrice();
+  //   setPrice(data);
+  // }, 3000);
 
   //Add user
   if (user) {
@@ -27,7 +62,8 @@ function Dashboard() {
     setShowFormContainer(true);
   };
 
-  const closeAddTransactionWindow = () => {
+  const closeAddTransactionWindow = async () => {
+    await fetchData();
     setShowData(true);
     setShowFormContainer(false);
   };
@@ -40,7 +76,11 @@ function Dashboard() {
           <Content>
             <DataCards
               onAddTransaction={onAddTransaction}
-              onTransactionSubmit={onAddTransaction}
+              dataExist={dataExist}
+              tableData={tableData}
+              coins={coins}
+              price={price}
+              isLoading={isLoading}
             />
           </Content>
         )}
